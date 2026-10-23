@@ -337,7 +337,7 @@ export default function App() {
       km: 660,
       bestCar: 'Sedan / Maruti Ertiga SUV',
       season: 'Best Season: March to June (Cool lake breezes) & Dec to Jan (Winter chill & quiet snow views).',
-      mainImg: '/tours/nainital.png',
+      mainImg: '/tours/nainnital.png',
       spots: [
         'Naini Lake & Yacht Boating (Tallital Stand)',
         'Maa Naina Devi Shaktipeeth & Tibetan Bazaar',
