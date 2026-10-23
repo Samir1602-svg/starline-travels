@@ -1404,9 +1404,9 @@ export default function App() {
                       onChange={e => setDriverForm({...driverForm, car_model: e.target.value})}
                       className="w-full p-3 border rounded-xl outline-none bg-slate-50 font-semibold"
                     >
-                      <option>Maruti Dzire / Hyundai Aura</option>
+                      <option>Maruti Dzire / Hyundai Aura (Petrol / CNG)</option>
                       <option>Maruti Ertiga (Petrol / CNG)</option>
-                      <option>Toyota Innova Crysta</option>
+                      <option>Toyota Innova Crysta (Petrol / CNG)</option>
                       <option>Force Urbania / Tempo Traveller</option>
                     </select>
                   </div>
