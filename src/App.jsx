@@ -24,9 +24,12 @@ const StarLineLogo = ({ className = "w-12 h-12" }) => (
 );
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
-  const [tourCategoryFilter, setTourCategoryFilter] = useState('all');
-  const [itineraryLang, setItineraryLang] = useState('hinglish');
+  const [currentPage, setCurrentPage] = useState('home');
+  const [tourCategoryFilter, setTourCategoryFilter] = useState('all');
+  const [itineraryLang, setItineraryLang] = useState('hinglish');
+  
+  // NAYA STATE YAHAN ADD KAREIN:
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Dynamic Rates State
   const [rates, setRates] = useState({
@@ -741,79 +744,124 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between selection:bg-blue-600 selection:text-white font-sans relative">
       
-      {/* 1. ENTERPRISE HEADER WITH UPDATED BRAND LOGO */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
-          
-          <div 
-            onClick={() => setCurrentPage('home')}
-            className="flex items-center gap-3 cursor-pointer group"
-          >
-            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-amber-400 shadow bg-white flex items-center justify-center p-0.5 group-hover:scale-105 transition">
-              <StarLineLogo className="w-full h-full" />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-black text-lg md:text-xl text-slate-900 tracking-tight">STAR LINE TRAVELS</span>
-                <span className="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-bold border border-blue-200 flex items-center gap-0.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-blue-600" /> Google Verified
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-500 font-semibold">Reserve Now • Since 2024 • Burari, Delhi NCR</p>
-            </div>
-          </div>
+      {/* 1. ENTERPRISE HEADER WITH MOBILE RESPONSIVE MENU */}
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
+          
+          <div 
+            onClick={() => { setCurrentPage('home'); setMobileMenuOpen(false); }}
+            className="flex items-center gap-3 cursor-pointer group"
+          >
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-amber-400 shadow bg-white flex items-center justify-center p-0.5 group-hover:scale-105 transition">
+              <StarLineLogo className="w-full h-full" />
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="font-black text-sm md:text-xl text-slate-900 tracking-tight">STAR LINE TRAVELS</span>
+                <span className="hidden sm:flex bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-bold border border-blue-200 items-center gap-0.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-blue-600" /> Google Verified
+                </span>
+              </div>
+              <p className="text-[10px] md:text-[11px] text-slate-500 font-semibold">Burari, Delhi NCR</p>
+            </div>
+          </div>
 
-          <nav className="hidden md:flex items-center gap-1.5 text-xs font-bold text-slate-700">
-            <button 
-              onClick={() => setCurrentPage('home')}
-              className={`px-3.5 py-2 rounded-xl transition ${currentPage === 'home' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
-            >
-              Home
-            </button>
-            <button 
-              onClick={() => setCurrentPage('fleet')}
-              className={`px-3.5 py-2 rounded-xl transition ${currentPage === 'fleet' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
-            >
-              Our Fleet
-            </button>
-            <button 
-              onClick={() => setCurrentPage('tours')}
-              className={`px-3.5 py-2 rounded-xl transition ${currentPage === 'tours' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
-            >
-              Tours & Dharmik Yatra
-            </button>
-            <button 
-              onClick={() => setCurrentPage('policy')}
-              className={`px-3.5 py-2 rounded-xl transition ${currentPage === 'policy' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
-            >
-              Fare Terms & Policies
-            </button>
-            <button 
-              onClick={() => setCurrentPage('attach')}
-              className={`px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 ${currentPage === 'attach' ? 'bg-amber-100 text-amber-950 font-black' : 'bg-amber-50 text-amber-900 hover:bg-amber-100'}`}
-            >
-              <UserPlus className="w-3.5 h-3.5 text-amber-700" /> Attach Your Cab
-            </button>
-          </nav>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-1.5 text-xs font-bold text-slate-700">
+            <button 
+              onClick={() => setCurrentPage('home')}
+              className={`px-3.5 py-2 rounded-xl transition ${currentPage === 'home' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
+            >
+              Home
+            </button>
+            <button 
+              onClick={() => setCurrentPage('fleet')}
+              className={`px-3.5 py-2 rounded-xl transition ${currentPage === 'fleet' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
+            >
+              Our Fleet
+            </button>
+            <button 
+              onClick={() => setCurrentPage('tours')}
+              className={`px-3.5 py-2 rounded-xl transition ${currentPage === 'tours' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
+            >
+              Tours & Dharmik Yatra
+            </button>
+            <button 
+              onClick={() => setCurrentPage('policy')}
+              className={`px-3.5 py-2 rounded-xl transition ${currentPage === 'policy' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
+            >
+              Fare Terms & Policies
+            </button>
+            <button 
+              onClick={() => setCurrentPage('attach')}
+              className={`px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 ${currentPage === 'attach' ? 'bg-amber-100 text-amber-950 font-black' : 'bg-amber-50 text-amber-900 hover:bg-amber-100'}`}
+            >
+              <UserPlus className="w-3.5 h-3.5 text-amber-700" /> Attach Your Cab
+            </button>
+          </nav>
 
-          <div className="flex items-center gap-2">
-            <a 
-              href="tel:+918882191825"
-              className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl shadow-md shadow-blue-600/20 transition"
-            >
-              <Phone className="w-4 h-4 fill-white" /> +91 88821 91825
-            </a>
+          <div className="flex items-center gap-2">
+            <a 
+              href="tel:+918882191825"
+              className="hidden sm:flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs md:text-sm font-black px-4 py-2.5 rounded-xl shadow-md shadow-blue-600/20 transition"
+            >
+              <Phone className="w-4 h-4 fill-white" /> +91 88821 91825
+            </a>
 
-            <button 
-              onClick={() => setCurrentPage('admin')}
-              className="p-2 text-slate-400 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition"
-              title="Operator Portal (Authorized Only)"
-            >
-              <Lock className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </header>
+            <button 
+              onClick={() => setCurrentPage('admin')}
+              className="p-2 text-slate-400 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition"
+              title="Operator Portal"
+            >
+              <Lock className="w-4 h-4" />
+            </button>
+
+            {/* Mobile Menu Hamburger Button */}
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-xl transition"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <nav className="md:hidden bg-white border-t border-slate-200 px-4 py-3 flex flex-col gap-2 text-xs font-bold text-slate-700 shadow-lg">
+            <button 
+              onClick={() => { setCurrentPage('home'); setMobileMenuOpen(false); }}
+              className={`text-left px-3.5 py-2.5 rounded-xl transition ${currentPage === 'home' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
+            >
+              Home
+            </button>
+            <button 
+              onClick={() => { setCurrentPage('fleet'); setMobileMenuOpen(false); }}
+              className={`text-left px-3.5 py-2.5 rounded-xl transition ${currentPage === 'fleet' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
+            >
+              Our Fleet
+            </button>
+            <button 
+              onClick={() => { setCurrentPage('tours'); setMobileMenuOpen(false); }}
+              className={`text-left px-3.5 py-2.5 rounded-xl transition ${currentPage === 'tours' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
+            >
+              Tours & Dharmik Yatra
+            </button>
+            <button 
+              onClick={() => { setCurrentPage('policy'); setMobileMenuOpen(false); }}
+              className={`text-left px-3.5 py-2.5 rounded-xl transition ${currentPage === 'policy' ? 'bg-blue-50 text-blue-700 font-black' : 'hover:bg-slate-100'}`}
+            >
+              Fare Terms & Policies
+            </button>
+            <button 
+              onClick={() => { setCurrentPage('attach'); setMobileMenuOpen(false); }}
+              className={`text-left px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 ${currentPage === 'attach' ? 'bg-amber-100 text-amber-950 font-black' : 'bg-amber-50 text-amber-900 hover:bg-amber-100'}`}
+            >
+              <UserPlus className="w-3.5 h-3.5 text-amber-700" /> Attach Your Cab
+            </button>
+          </nav>
+        )}
+      </header>
 
       {/* 2. DYNAMIC PAGE ROUTING CONTAINER */}
       <main className="flex-1">
