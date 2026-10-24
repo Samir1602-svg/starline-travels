@@ -28,7 +28,7 @@ export default function App() {
   const [tourCategoryFilter, setTourCategoryFilter] = useState('all');
   const [itineraryLang, setItineraryLang] = useState('hinglish');
   
-  // NAYA STATE YAHAN ADD KAREIN:
+  // Mobile Menu State
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Dynamic Rates State
@@ -93,10 +93,31 @@ export default function App() {
     { label: 'Pushkar & Ajmer Sharif Dargah', km: 410, cat: 'holiday' }
   ];
 
+  // Helper check: Is location inside Delhi NCR?
+  const isDelhiNCR = (locStr) => {
+    if (!locStr) return true; // Default assumption for Delhi NCR starting point
+    const found = allLocations.find(l => l.label === locStr);
+    if (found) return found.type === 'pickup';
+    return locStr.includes('Delhi') || locStr.includes('GPS Pin') || locStr.includes('Noida') || locStr.includes('Gurgaon') || locStr.includes('Ghaziabad');
+  };
+
+  const isPickupInDelhi = isDelhiNCR(pickup);
+
+  // Filter Drop options dynamically based on Pickup location
+  const filteredDropLocations = allLocations.filter(loc => {
+    if (!pickup) return true;
+    if (isPickupInDelhi) {
+      return loc.type !== 'pickup'; // If pickup is Delhi NCR, destination must be Outstation
+    } else {
+      return loc.type === 'pickup'; // If pickup is Outstation, destination must be Delhi NCR
+    }
+  });
+
   const handleSwapLocations = () => {
-    const temp = pickup;
-    setPickup(drop);
-    setDrop(temp);
+    const tempPickup = pickup;
+    const tempDrop = drop;
+    setPickup(tempDrop);
+    setDrop(tempPickup);
   };
 
   const [selectedTour, setSelectedTour] = useState(null);
@@ -689,7 +710,8 @@ export default function App() {
     if (!drop || !carType) return null;
 
     const selectedDest = allLocations.find(d => d.label === drop);
-    const oneWayDistance = selectedDest ? (selectedDest.km || 400) : 400;
+    const selectedOrigin = allLocations.find(o => o.label === pickup);
+    const oneWayDistance = selectedDest ? (selectedDest.km || 400) : (selectedOrigin ? (selectedOrigin.km || 400) : 400);
 
     let rate = rates.sedan;
     if (carType.includes('Ertiga')) rate = rates.suv;
@@ -704,7 +726,8 @@ export default function App() {
         dist: totalKm, 
         total: Math.round(total), 
         rate, 
-        breakdown: `${totalKm} km (Both ways) + ₹${days * rates.driverAllowance} Driver Allowance` 
+        breakdown: `${totalKm} km (Both ways) + ₹${days * rates.driverAllowance} Driver Allowance`,
+        directionType: isPickupInDelhi ? 'Delhi NCR to Outstation Tour' : 'Outstation to Delhi NCR Return Tour'
       };
     } else {
       const billableKm = Math.round(oneWayDistance * rates.oneWaySurchargeRatio);
@@ -713,7 +736,8 @@ export default function App() {
         dist: oneWayDistance, 
         total: Math.round(total), 
         rate, 
-        breakdown: `One-Way Drop (${oneWayDistance} km) + Verified Return Surcharge included` 
+        breakdown: `One-Way Drop (${oneWayDistance} km) + Verified Return Surcharge included`,
+        directionType: isPickupInDelhi ? 'Delhi NCR to Outstation Drop' : 'Outstation to Delhi NCR Doorstep Drop'
       };
     }
   };
@@ -772,7 +796,7 @@ export default function App() {
 
     setLeads([newLead, ...leads]);
 
-    const msg = `*STAR LINE TRAVELS BOOKING INQUIRY* 🚗%0A%0AHello Team, I would like to reserve a cab:%0A• *Traveler Name:* ${encodeURIComponent(customerName)}%0A• *Contact Phone:* ${customerPhone}%0A• *Journey Type:* ${tripType === 'round-trip' ? 'Round-Trip' : 'One-Way Drop'}%0A• *Pickup:* ${encodeURIComponent(pickup)}%0A• *Destination Landmark:* ${encodeURIComponent(drop)}%0A• *Journey Date:* ${date || 'Earliest Available'}%0A• *Vehicle Selected:* ${encodeURIComponent(carType)}%0A• *Calculated Fare:* ₹${currentFare ? currentFare.total : 'TBD'}%0A%0APlease confirm chauffeur allocation.`;
+    const msg = `*STAR LINE TRAVELS BOOKING INQUIRY* 🚗%0A%0AHello Team, I would like to reserve a cab:%0A• *Traveler Name:* ${encodeURIComponent(customerName)}%0A• *Contact Phone:* ${customerPhone}%0A• *Journey Route:* ${currentFare?.directionType || 'Custom Route'}%0A• *Journey Type:* ${tripType === 'round-trip' ? 'Round-Trip' : 'One-Way Drop'}%0A• *Pickup:* ${encodeURIComponent(pickup)}%0A• *Destination Landmark:* ${encodeURIComponent(drop)}%0A• *Journey Date:* ${date || 'Earliest Available'}%0A• *Vehicle Selected:* ${encodeURIComponent(carType)}%0A• *Calculated Fare:* ₹${currentFare ? currentFare.total : 'TBD'}%0A%0APlease confirm chauffeur allocation.`;
     window.open(`https://wa.me/918882191825?text=${msg}`, '_blank');
   };
 
@@ -1035,14 +1059,27 @@ export default function App() {
                       </div>
                       <select 
                         value={pickup} 
-                        onChange={e => setPickup(e.target.value)}
+                        onChange={e => {
+                          setPickup(e.target.value);
+                          // Auto reset drop if it equals newly selected pickup
+                          if (drop === e.target.value) setDrop('');
+                        }}
                         className="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-200 outline-none bg-slate-50/50 focus:ring-2 focus:ring-blue-600"
                         required
                       >
                         <option value="">-- Select Pickup Point / Area --</option>
-                        {allLocations.map((opt, i) => (
-                          <option key={i} value={opt.label}>{opt.label}</option>
-                        ))}
+                        <optgroup label="📍 Delhi NCR Pickup Hubs">
+                          {allLocations.filter(l => l.type === 'pickup').map((opt, i) => (
+                            <option key={`p-delhi-${i}`} value={opt.label}>{opt.label}</option>
+                          ))}
+                        </optgroup>
+                        <optgroup label="🚩 Dharmik Tirth / Outstation Hubs">
+                          {allLocations.filter(l => l.type !== 'pickup').map((opt, i) => (
+                            <option key={`p-out-${i}`} value={opt.label}>
+                              {opt.cat === 'dharmik' ? '🚩 ' : opt.cat === 'budget' ? '⚡ ' : '🏔️ '} {opt.label} ({opt.km} km)
+                            </option>
+                          ))}
+                        </optgroup>
                       </select>
                     </div>
 
@@ -1058,9 +1095,14 @@ export default function App() {
                       </button>
                     </div>
 
-                    {/* DESTINATION LANDMARK */}
+                    {/* DESTINATION LANDMARK WITH DYNAMIC CATEGORIZATION */}
                     <div>
-                      <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wide block mb-1">Destination Landmark *</label>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Destination Landmark *</label>
+                        <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
+                          {isPickupInDelhi ? "Delhi NCR ➔ Outstation" : "Outstation ➔ Delhi NCR"}
+                        </span>
+                      </div>
                       <select 
                         value={drop} 
                         onChange={e => setDrop(e.target.value)}
@@ -1068,11 +1110,50 @@ export default function App() {
                         required
                       >
                         <option value="">-- Select Destination Landmark --</option>
-                        {allLocations.map((opt, i) => (
-                          <option key={i} value={opt.label}>
-                            {opt.cat === 'dharmik' ? '🚩 ' : opt.cat === 'budget' ? '⚡ ' : '🏔️ '} {opt.label} ({opt.km} km)
-                          </option>
-                        ))}
+
+                        {/* If Pickup is Delhi NCR -> Show categorized Outstation destinations */}
+                        {isPickupInDelhi ? (
+                          <>
+                            {filteredDropLocations.some(l => l.cat === 'dharmik') && (
+                              <optgroup label="🚩 Dharmik Tirth Yatra">
+                                {filteredDropLocations.filter(l => l.cat === 'dharmik').map((opt, i) => (
+                                  <option key={`d-dharmik-${i}`} value={opt.label}>
+                                    🚩 {opt.label} ({opt.km} km)
+                                  </option>
+                                ))}
+                              </optgroup>
+                            )}
+
+                            {filteredDropLocations.some(l => l.cat === 'holiday') && (
+                              <optgroup label="🏔️ Mountain & Heritage Holidays">
+                                {filteredDropLocations.filter(l => l.cat === 'holiday').map((opt, i) => (
+                                  <option key={`d-holiday-${i}`} value={opt.label}>
+                                    🏔️ {opt.label} ({opt.km} km)
+                                  </option>
+                                ))}
+                              </optgroup>
+                            )}
+
+                            {filteredDropLocations.some(l => l.cat === 'budget') && (
+                              <optgroup label="⚡ Budget-Friendly Escapes">
+                                {filteredDropLocations.filter(l => l.cat === 'budget').map((opt, i) => (
+                                  <option key={`d-budget-${i}`} value={opt.label}>
+                                    ⚡ {opt.label} ({opt.km} km)
+                                  </option>
+                                ))}
+                              </optgroup>
+                            )}
+                          </>
+                        ) : (
+                          /* If Pickup is Outstation -> Show Delhi NCR doorstep drop points */
+                          <optgroup label="📍 Delhi NCR Doorstep Drop Locations">
+                            {filteredDropLocations.map((opt, i) => (
+                              <option key={`d-ncr-${i}`} value={opt.label}>
+                                📍 {opt.label}
+                              </option>
+                            ))}
+                          </optgroup>
+                        )}
                       </select>
                     </div>
 
@@ -1129,12 +1210,17 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* LIVE FARE CARD */}
+                    {/* LIVE FARE CARD WITH DIRECTION TYPE BADGE */}
                     {currentFare ? (
                       <div className="bg-slate-900 text-white p-3.5 rounded-2xl flex items-center justify-between">
                         <div>
-                          <div className="text-[11px] text-slate-400 capitalize">{tripType.replace('-', ' ')} ({currentFare.dist} km)</div>
-                          <div className="text-xl font-black text-amber-400">₹{currentFare.total.toLocaleString()}</div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[10px] bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded-md uppercase">
+                              {currentFare.directionType}
+                            </span>
+                            <span className="text-[11px] text-slate-400">({currentFare.dist} km)</span>
+                          </div>
+                          <div className="text-xl font-black text-amber-400 mt-0.5">₹{currentFare.total.toLocaleString()}</div>
                           <div className="text-[10px] text-slate-400 truncate max-w-[220px]">{currentFare.breakdown}</div>
                         </div>
                         <div className="text-right">
@@ -1689,7 +1775,7 @@ export default function App() {
                       <label className="text-[11px] font-bold text-emerald-900 block">1-Way Factor</label>
                       <input 
                         type="number" 
-                        step="0.05"
+                        step="0.05" 
                         value={rates.oneWaySurchargeRatio}
                         onChange={e => handleRateUpdate({...rates, oneWaySurchargeRatio: Number(e.target.value)})}
                         className="w-full mt-1.5 p-2 border rounded-xl font-black text-emerald-700 text-base bg-white"
@@ -1709,7 +1795,7 @@ export default function App() {
                           <div className="text-slate-500 mt-0.5">{l.pickup} ➔ {l.drop} ({l.car})</div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="font-black text-emerald-700 text-base">₹{l.fare.toLocaleString()}</span>
+                          <span className="font-black text-emerald-700 text-base">₹{l.fare?.toLocaleString()}</span>
                           <a 
                             href={`https://wa.me/91${l.phone}?text=Hello%20${encodeURIComponent(l.name)},%20this%20is%20Star%20Line%20Travels.%20Your%20quotation%20for%20the%20${encodeURIComponent(l.drop)}%20journey%20is%20ready.`}
                             target="_blank"
