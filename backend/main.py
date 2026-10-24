@@ -34,12 +34,17 @@ app.add_middleware(
 class LeadCreate(BaseModel):
     name: Optional[str] = "Customer"
     phone: str
-    pickup_city: str
-    drop_city: str
+    pickup: Optional[str] = ""
+    drop: Optional[str] = ""
+    pickup_city: Optional[str] = ""
+    drop_city: Optional[str] = ""
     trip_type: Optional[str] = "round-trip"
     travel_date: Optional[str] = None
     car_type: Optional[str] = "Sedan (Dzire / Aura)"
+    fare: Optional[float] = 0.0
     estimated_fare: Optional[float] = 0.0
+    type: Optional[str] = "Round-Trip"
+    date: Optional[str] = "Flexible"
 
 class DriverRegister(BaseModel):
     driver_name: str
@@ -142,12 +147,12 @@ def update_settings(payload: Dict[str, Any]):
 @app.get("/api/tours")
 def get_tours():
     if not supabase:
-        return {"tours": []}
+        return []
     try:
         res = supabase.table("tours_catalog").select("*").execute()
-        return {"tours": res.data or []}
+        return res.data or []
     except Exception as e:
-        return {"tours": [], "error": str(e)}
+        return []
 
 @app.post("/api/tours")
 def save_tour(tour: Dict[str, Any]):
@@ -175,7 +180,16 @@ def save_lead(lead: LeadCreate):
     if not supabase:
         return {"status": "mock_saved", "data": lead.dict()}
     try:
-        res = supabase.table("leads").insert(lead.dict()).execute()
+        # Map fields flexibly to match database columns
+        data = lead.dict()
+        if not data.get("pickup") and data.get("pickup_city"):
+            data["pickup"] = data["pickup_city"]
+        if not data.get("drop") and data.get("drop_city"):
+            data["drop"] = data["drop_city"]
+        if not data.get("fare") and data.get("estimated_fare"):
+            data["fare"] = data["estimated_fare"]
+
+        res = supabase.table("leads").insert(data).execute()
         return {"status": "success", "data": res.data}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -183,12 +197,12 @@ def save_lead(lead: LeadCreate):
 @app.get("/api/leads")
 def get_leads():
     if not supabase:
-        return {"leads": []}
+        return []
     try:
         res = supabase.table("leads").select("*").order("created_at", desc=True).limit(50).execute()
-        return {"leads": res.data or []}
+        return res.data or []
     except Exception as e:
-        return {"leads": [], "error": str(e)}
+        return []
 
 # ----------------- 6. DRIVER PARTNER ATTACHMENT -----------------
 @app.post("/api/drivers")
@@ -204,9 +218,9 @@ def register_driver(driver: DriverRegister):
 @app.get("/api/drivers")
 def get_drivers():
     if not supabase:
-        return {"drivers": []}
+        return []
     try:
         res = supabase.table("driver_partners").select("*").order("created_at", desc=True).limit(50).execute()
-        return {"drivers": res.data or []}
+        return res.data or []
     except Exception as e:
-        return {"drivers": [], "error": str(e)}
+        return []
