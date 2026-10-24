@@ -36,13 +36,8 @@ class LeadCreate(BaseModel):
     phone: str
     pickup: Optional[str] = ""
     drop: Optional[str] = ""
-    pickup_city: Optional[str] = ""
-    drop_city: Optional[str] = ""
-    trip_type: Optional[str] = "round-trip"
-    travel_date: Optional[str] = None
-    car_type: Optional[str] = "Sedan (Dzire / Aura)"
+    car: Optional[str] = "Sedan (Dzire / Aura)"
     fare: Optional[float] = 0.0
-    estimated_fare: Optional[float] = 0.0
     type: Optional[str] = "Round-Trip"
     date: Optional[str] = "Flexible"
 
@@ -129,7 +124,9 @@ def get_settings():
         return {}
     try:
         res = supabase.table("app_settings").select("*").eq("id", 1).execute()
-        return res.data[0] if res.data else {}
+        if res.data and len(res.data) > 0:
+            return res.data[0]
+        return {}
     except Exception as e:
         return {"error": str(e)}
 
@@ -138,7 +135,10 @@ def update_settings(payload: Dict[str, Any]):
     if not supabase:
         return {"status": "mock_saved", "data": payload}
     try:
-        res = supabase.table("app_settings").update(payload).eq("id", 1).execute()
+        data_to_save = dict(payload)
+        data_to_save["id"] = 1
+        data_to_save["updated_at"] = datetime.datetime.utcnow().isoformat()
+        res = supabase.table("app_settings").upsert(data_to_save).execute()
         return {"status": "success", "data": res.data}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -177,19 +177,11 @@ def delete_tour(tour_id: str):
 # ----------------- 5. CUSTOMER INQUIRIES & LEADS -----------------
 @app.post("/api/leads")
 def save_lead(lead: LeadCreate):
+    lead_dict = lead.model_dump() if hasattr(lead, "model_dump") else lead.dict()
     if not supabase:
-        return {"status": "mock_saved", "data": lead.dict()}
+        return {"status": "mock_saved", "data": lead_dict}
     try:
-        # Map fields flexibly to match database columns
-        data = lead.dict()
-        if not data.get("pickup") and data.get("pickup_city"):
-            data["pickup"] = data["pickup_city"]
-        if not data.get("drop") and data.get("drop_city"):
-            data["drop"] = data["drop_city"]
-        if not data.get("fare") and data.get("estimated_fare"):
-            data["fare"] = data["estimated_fare"]
-
-        res = supabase.table("leads").insert(data).execute()
+        res = supabase.table("leads").insert(lead_dict).execute()
         return {"status": "success", "data": res.data}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -207,10 +199,18 @@ def get_leads():
 # ----------------- 6. DRIVER PARTNER ATTACHMENT -----------------
 @app.post("/api/drivers")
 def register_driver(driver: DriverRegister):
+    driver_dict = driver.model_dump() if hasattr(driver, "model_dump") else driver.dict()
     if not supabase:
-        return {"status": "mock_saved", "data": driver.dict()}
+        return {"status": "mock_saved", "data": driver_dict}
     try:
-        res = supabase.table("driver_partners").insert(driver.dict()).execute()
+        payload = {
+            "name": driver.driver_name,
+            "phone": driver.phone,
+            "car": f"{driver.car_model} ({driver.car_year})",
+            "base": driver.base_location,
+            "status": "Partner Under Review"
+        }
+        res = supabase.table("drivers").insert(payload).execute()
         return {"status": "success", "message": "Cab registered for verification.", "data": res.data}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -220,7 +220,7 @@ def get_drivers():
     if not supabase:
         return []
     try:
-        res = supabase.table("driver_partners").select("*").order("created_at", desc=True).limit(50).execute()
+        res = supabase.table("drivers").select("*").order("created_at", desc=True).limit(50).execute()
         return res.data or []
     except Exception as e:
         return []
