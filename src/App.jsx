@@ -1685,7 +1685,7 @@ export default function App() {
                         className="w-full mt-1.5 p-2 border rounded-xl font-black text-amber-700 text-base bg-white"
                       />
                     </div>
-                    <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-200">
+                   <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-200">
                       <label className="text-[11px] font-bold text-emerald-900 block">1-Way Factor</label>
                       <input 
                         type="number" 
@@ -1695,11 +1695,12 @@ export default function App() {
                         className="w-full mt-1.5 p-2 border rounded-xl font-black text-emerald-700 text-base bg-white"
                       />
                     </div>
-                </div>
+                  </div>
+                </div>
 
-                {/* RECENT LEADS */}
-                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                  <h3 className="font-black text-base text-slate-900 mb-3">Customer Booking Inquiries ({leads.length})</h3>
+                {/* RECENT LEADS */}
+                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                  <h3 className="font-black text-base text-slate-900 mb-3">Customer Booking Inquiries ({leads.length})</h3>
                   <div className="space-y-3">
                     {leads.map((l) => (
                       <div key={l.id} className="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 text-xs">
