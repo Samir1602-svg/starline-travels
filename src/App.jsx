@@ -1691,7 +1691,7 @@ export default function App() {
                   />
                   <button 
                     onClick={() => {
-                      if (adminPin === 'Irfan@1234') setIsAdminLoggedIn(true);
+                      if (adminPin === 'Ninja@007860') setIsAdminLoggedIn(true);
                       else alert("Incorrect Password. Please re-enter.");
                     }}
                     className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition text-xs"
