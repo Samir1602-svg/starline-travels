@@ -111,7 +111,6 @@ export default function App() {
     { id: 2, name: 'Sukhvinder Singh', phone: '9810112233', car: 'Innova Crysta 2023', base: 'Rohini, Delhi', status: 'Approved' }
   ]);
 
-  // YAHAN SE NAYA useEffect ADD KAREIN:
   useEffect(() => {
     fetch(`${API_BASE}/api/leads`)
       .then(res => res.json())
@@ -122,8 +121,44 @@ export default function App() {
       .then(res => res.json())
       .then(data => { if (Array.isArray(data) && data.length > 0) setDrivers(data); })
       .catch(err => console.log("Error loading drivers:", err));
-  }, [],);
 
+    fetch(`${API_BASE}/api/settings`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && !data.error && Object.keys(data).length > 0) {
+          setRates({
+            sedan: data.sedan ?? 12,
+            suv: data.suv ?? 15,
+            crysta: data.crysta ?? 19,
+            tempo: data.tempo ?? 26,
+            driverAllowance: data.driver_allowance ?? 500,
+            oneWaySurchargeRatio: data.oneway_ratio ?? 1.65
+          });
+        }
+      })
+      .catch(err => console.log("Error loading rates:", err));
+  }, []);
+
+  const handleRateUpdate = async (updatedRates) => {
+    setRates(updatedRates);
+    try {
+      await fetch(`${API_BASE}/api/settings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sedan: updatedRates.sedan,
+          suv: updatedRates.suv,
+          crysta: updatedRates.crysta,
+          tempo: updatedRates.tempo,
+          driver_allowance: updatedRates.driverAllowance,
+          oneway_ratio: updatedRates.oneWaySurchargeRatio
+        })
+      });
+    } catch (err) {
+      console.error("Rates save failed:", err);
+    }
+  };
+  
   const [driverForm, setDriverForm] = useState({
     driver_name: '',
     phone: '',
@@ -1605,60 +1640,61 @@ export default function App() {
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                     <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
                       <label className="text-[11px] font-bold text-slate-600 block">Sedan (₹/km)</label>
-                      <input 
-                        type="number" 
-                        value={rates.sedan}
-                        onChange={e => setRates({...rates, sedan: Number(e.target.value)})}
-                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-blue-700 text-base bg-white"
-                      />
-                    </div>
-                    <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <label className="text-[11px] font-bold text-slate-600 block">Ertiga (₹/km)</label>
-                      <input 
-                        type="number" 
-                        value={rates.suv}
-                        onChange={e => setRates({...rates, suv: Number(e.target.value)})}
-                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-blue-700 text-base bg-white"
-                      />
-                    </div>
-                    <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <label className="text-[11px] font-bold text-slate-600 block">Crysta (₹/km)</label>
-                      <input 
-                        type="number" 
-                        value={rates.crysta}
-                        onChange={e => setRates({...rates, crysta: Number(e.target.value)})}
-                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-blue-700 text-base bg-white"
-                      />
-                    </div>
-                    <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                      <label className="text-[11px] font-bold text-slate-600 block">Tempo (₹/km)</label>
-                      <input 
-                        type="number" 
-                        value={rates.tempo}
-                        onChange={e => setRates({...rates, tempo: Number(e.target.value)})}
-                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-blue-700 text-base bg-white"
-                      />
-                    </div>
-                    <div className="p-3 bg-amber-50 rounded-2xl border border-amber-200">
-                      <label className="text-[11px] font-bold text-amber-900 block">Driver DA (₹/day)</label>
-                      <input 
-                        type="number" 
-                        value={rates.driverAllowance}
-                        onChange={e => setRates({...rates, driverAllowance: Number(e.target.value)})}
-                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-amber-700 text-base bg-white"
-                      />
-                    </div>
-                    <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-200">
-                      <label className="text-[11px] font-bold text-emerald-900 block">1-Way Factor</label>
-                      <input 
-                        type="number" 
-                        step="0.05"
-                        value={rates.oneWaySurchargeRatio}
-                        onChange={e => setRates({...rates, oneWaySurchargeRatio: Number(e.target.value)})}
-                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-emerald-700 text-base bg-white"
-                      />
-                    </div>
-                  </div>
+                      <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                      <label className="text-[11px] font-bold text-slate-600 block">Sedan (₹/km)</label>
+                      <input 
+                        type="number" 
+                        value={rates.sedan}
+                        onChange={e => handleRateUpdate({...rates, sedan: Number(e.target.value)})}
+                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-blue-700 text-base bg-white"
+                      />
+                    </div>
+                    <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                      <label className="text-[11px] font-bold text-slate-600 block">Ertiga (₹/km)</label>
+                      <input 
+                        type="number" 
+                        value={rates.suv}
+                        onChange={e => handleRateUpdate({...rates, suv: Number(e.target.value)})}
+                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-blue-700 text-base bg-white"
+                      />
+                    </div>
+                    <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                      <label className="text-[11px] font-bold text-slate-600 block">Crysta (₹/km)</label>
+                      <input 
+                        type="number" 
+                        value={rates.crysta}
+                        onChange={e => handleRateUpdate({...rates, crysta: Number(e.target.value)})}
+                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-blue-700 text-base bg-white"
+                      />
+                    </div>
+                    <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                      <label className="text-[11px] font-bold text-slate-600 block">Tempo (₹/km)</label>
+                      <input 
+                        type="number" 
+                        value={rates.tempo}
+                        onChange={e => handleRateUpdate({...rates, tempo: Number(e.target.value)})}
+                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-blue-700 text-base bg-white"
+                      />
+                    </div>
+                    <div className="p-3 bg-amber-50 rounded-2xl border border-amber-200">
+                      <label className="text-[11px] font-bold text-amber-900 block">Driver DA (₹/day)</label>
+                      <input 
+                        type="number" 
+                        value={rates.driverAllowance}
+                        onChange={e => handleRateUpdate({...rates, driverAllowance: Number(e.target.value)})}
+                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-amber-700 text-base bg-white"
+                      />
+                    </div>
+                    <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-200">
+                      <label className="text-[11px] font-bold text-emerald-900 block">1-Way Factor</label>
+                      <input 
+                        type="number" 
+                        step="0.05"
+                        value={rates.oneWaySurchargeRatio}
+                        onChange={e => handleRateUpdate({...rates, oneWaySurchargeRatio: Number(e.target.value)})}
+                        className="w-full mt-1.5 p-2 border rounded-xl font-black text-emerald-700 text-base bg-white"
+                      />
+                    </div>
                 </div>
 
                 {/* RECENT LEADS */}
