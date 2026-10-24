@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Phone, MessageSquare, Car, Calendar, MapPin, 
   ShieldCheck, Star, Users, CheckCircle, Clock, 
@@ -106,10 +106,23 @@ export default function App() {
     { id: 1, name: 'Sharma Family', phone: '9811234567', pickup: 'Burari Delhi', drop: 'Char Dham Yatra', car: 'Ertiga SUV', fare: 32500, type: 'Round-Trip' },
     { id: 2, name: 'John Miller (Tourist)', phone: '9871098765', pickup: 'IGI Airport T3', drop: 'Agra Taj Mahal & Jaipur', car: 'Innova Crysta', fare: 14500, type: 'Round-Trip' }
   ]);
-  const [drivers, setDrivers] = useState([
-    { id: 1, name: 'Mukesh Sharma', phone: '9910099887', car: 'Maruti Ertiga 2024', base: 'Burari, Delhi', status: 'Verified' },
-    { id: 2, name: 'Sukhvinder Singh', phone: '9810112233', car: 'Innova Crysta 2023', base: 'Rohini, Delhi', status: 'Approved' }
-  ]);
+ const [drivers, setDrivers] = useState([
+    { id: 1, name: 'Mukesh Sharma', phone: '9910099887', car: 'Maruti Ertiga 2024', base: 'Burari, Delhi', status: 'Verified' },
+    { id: 2, name: 'Sukhvinder Singh', phone: '9810112233', car: 'Innova Crysta 2023', base: 'Rohini, Delhi', status: 'Approved' }
+  ]);
+
+  // YAHAN SE NAYA useEffect ADD KAREIN:
+  useEffect(() => {
+    fetch(`${API_BASE}/api/leads`)
+      .then(res => res.json())
+      .then(data => { if (Array.isArray(data) && data.length > 0) setLeads(data); })
+      .catch(err => console.log("Error loading leads:", err));
+
+    fetch(`${API_BASE}/api/drivers`)
+      .then(res => res.json())
+      .then(data => { if (Array.isArray(data) && data.length > 0) setDrivers(data); })
+      .catch(err => console.log("Error loading drivers:", err));
+  }, [],);
 
   const [driverForm, setDriverForm] = useState({
     driver_name: '',
@@ -678,64 +691,85 @@ export default function App() {
     return Math.round((selectedTour.km * rate) + (rates.driverAllowance * 2));
   };
 
-  const handleBookingSubmit = (e) => {
-    e.preventDefault();
-    if (!customerName.trim()) {
-      alert("Please enter Traveler Full Name!");
-      return;
-    }
-    if (!customerPhone.trim() || customerPhone.length < 10) {
-      alert("Please enter a valid 10-digit WhatsApp Mobile Number!");
-      return;
-    }
-    if (!pickup) {
-      alert("Please select a Pickup Location!");
-      return;
-    }
-    if (!drop) {
-      alert("Please select a Destination Landmark!");
-      return;
-    }
-    if (!carType) {
-      alert("Please select a Vehicle Type!");
-      return;
-    }
+  const handleBookingSubmit = async (e) => {
+    e.preventDefault();
+    if (!customerName.trim()) {
+      alert("Please enter Traveler Full Name!");
+      return;
+    }
+    if (!customerPhone.trim() || customerPhone.length < 10) {
+      alert("Please enter a valid 10-digit WhatsApp Mobile Number!");
+      return;
+    }
+    if (!pickup) {
+      alert("Please select a Pickup Location!");
+      return;
+    }
+    if (!drop) {
+      alert("Please select a Destination Landmark!");
+      return;
+    }
+    if (!carType) {
+      alert("Please select a Vehicle Type!");
+      return;
+    }
 
-    const newLead = {
-      id: leads.length + 1,
-      name: customerName,
-      phone: customerPhone,
-      pickup: pickup,
-      drop: drop,
-      car: carType,
-      fare: currentFare ? currentFare.total : 0,
-      type: tripType === 'round-trip' ? 'Round-Trip' : 'One-Way Drop',
-      date: date || 'Flexible'
-    };
-    setLeads([newLead, ...leads]);
+    const newLead = {
+      name: customerName,
+      phone: customerPhone,
+      pickup: pickup,
+      drop: drop,
+      car: carType,
+      fare: currentFare ? currentFare.total : 0,
+      type: tripType === 'round-trip' ? 'Round-Trip' : 'One-Way Drop',
+      date: date || 'Flexible'
+    };
 
-    const msg = `*STAR LINE TRAVELS BOOKING INQUIRY* 🚗%0A%0AHello Team, I would like to reserve a cab:%0A• *Traveler Name:* ${encodeURIComponent(customerName)}%0A• *Contact Phone:* ${customerPhone}%0A• *Journey Type:* ${tripType === 'round-trip' ? 'Round-Trip' : 'One-Way Drop'}%0A• *Pickup:* ${encodeURIComponent(pickup)}%0A• *Destination Landmark:* ${encodeURIComponent(drop)}%0A• *Journey Date:* ${date || 'Earliest Available'}%0A• *Vehicle Selected:* ${encodeURIComponent(carType)}%0A• *Calculated Fare:* ₹${currentFare ? currentFare.total : 'TBD'}%0A%0APlease confirm chauffeur allocation.`;
-    window.open(`https://wa.me/918882191825?text=${msg}`, '_blank');
-  };
+    try {
+      await fetch(`${API_BASE}/api/leads`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newLead)
+      });
+    } catch (err) {
+      console.error("Database save failed:", err);
+    }
 
-  const handleDriverSubmit = (e) => {
-    e.preventDefault();
-    if (!driverForm.phone || !driverForm.driver_name) {
-      alert("Please complete the required details!");
-      return;
-    }
-    setDrivers([{
-      id: drivers.length + 1,
-      name: driverForm.driver_name,
-      phone: driverForm.phone,
-      car: `${driverForm.car_model} (${driverForm.car_year})`,
-      base: driverForm.base_location,
-      status: 'Partner Under Review'
-    }, ...drivers]);
-    alert("✅ Cab registration submitted successfully! Star Line Travels fleet operations team will contact you for commercial document verification.");
-    setDriverForm({ driver_name: '', phone: '', car_model: 'Maruti Ertiga', car_year: 2024, commercial_number: '', base_location: '', preferred_routes: '' });
-    setCurrentPage('home');
-  };
+    setLeads([newLead, ...leads]);
+
+    const msg = `*STAR LINE TRAVELS BOOKING INQUIRY* 🚗%0A%0AHello Team, I would like to reserve a cab:%0A• *Traveler Name:* ${encodeURIComponent(customerName)}%0A• *Contact Phone:* ${customerPhone}%0A• *Journey Type:* ${tripType === 'round-trip' ? 'Round-Trip' : 'One-Way Drop'}%0A• *Pickup:* ${encodeURIComponent(pickup)}%0A• *Destination Landmark:* ${encodeURIComponent(drop)}%0A• *Journey Date:* ${date || 'Earliest Available'}%0A• *Vehicle Selected:* ${encodeURIComponent(carType)}%0A• *Calculated Fare:* ₹${currentFare ? currentFare.total : 'TBD'}%0A%0APlease confirm chauffeur allocation.`;
+    window.open(`https://wa.me/918882191825?text=${msg}`, '_blank');
+  };
+  const handleDriverSubmit = async (e) => {
+    e.preventDefault();
+    if (!driverForm.phone || !driverForm.driver_name) {
+      alert("Please complete the required details!");
+      return;
+    }
+
+    try {
+      await fetch(`${API_BASE}/api/drivers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(driverForm)
+      });
+    } catch (err) {
+      console.error("Database driver save failed:", err);
+    }
+
+    setDrivers([{
+      id: drivers.length + 1,
+      name: driverForm.driver_name,
+      phone: driverForm.phone,
+      car: `${driverForm.car_model} (${driverForm.car_year})`,
+      base: driverForm.base_location,
+      status: 'Partner Under Review'
+    }, ...drivers]);
+
+    alert("✅ Cab registration submitted successfully! Star Line Travels fleet operations team will contact you for commercial document verification.");
+    setDriverForm({ driver_name: '', phone: '', car_model: 'Maruti Ertiga', car_year: 2024, commercial_number: '', base_location: '', preferred_routes: '' });
+    setCurrentPage('home');
+  };
 
   const filteredTours = tourCategoryFilter === 'all' 
     ? toursList 
