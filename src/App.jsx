@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Phone, MessageSquare, Car, Calendar, MapPin, 
   ShieldCheck, Star, Users, CheckCircle, Clock, 
   ChevronRight, ArrowRight, X, UserPlus, Database, 
   Sparkles, Navigation, Lock, Settings, Edit3, Compass,
   Luggage, Fuel, Award, Languages, Crosshair, HeartHandshake,
-  ArrowUpDown, BadgePercent, Camera, Info, CloudSnow, Sun, AlertTriangle, FileText, Image as ImageIcon, Map
+  ArrowUpDown, BadgePercent, Camera, Info, CloudSnow, Sun, AlertTriangle, FileText, Image as ImageIcon, Map, Search, ChevronDown
 } from 'lucide-react';
-
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 // BRAND LOGO LINKED TO /logo/brandlogo.jpeg
@@ -53,6 +52,29 @@ export default function App() {
   const [customerPhone, setCustomerPhone] = useState('');
   const [isLocating, setIsLocating] = useState(false);
 
+  // Premium Searchable Dropdown & Tour Search States
+  const [pickupSearch, setPickupSearch] = useState('');
+  const [isPickupOpen, setIsPickupOpen] = useState(false);
+  const [dropSearch, setDropSearch] = useState('');
+  const [isDropOpen, setIsDropOpen] = useState(false);
+  const [tourSearchQuery, setTourSearchQuery] = useState('');
+
+  const pickupRef = useRef(null);
+  const dropRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (pickupRef.current && !pickupRef.current.contains(event.target)) {
+        setIsPickupOpen(false);
+      }
+      if (dropRef.current && !dropRef.current.contains(event.target)) {
+        setIsDropOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+  
   // Unified Location Hubs
   const allLocations = [
     { label: 'Delhi NCR (Burari Main Hub / Outer Ring Rd)', type: 'pickup', km: 0 },
@@ -1267,9 +1289,16 @@ export default function App() {
     setCurrentPage('home');
   };
 
-  const filteredTours = tourCategoryFilter === 'all' 
-    ? toursList 
-    : toursList.filter(t => t.category === tourCategoryFilter);
+ const filteredTours = toursList.filter(t => {
+    const matchesCategory = tourCategoryFilter === 'all' || t.category === tourCategoryFilter;
+    const q = tourSearchQuery.toLowerCase().trim();
+    const matchesSearch = !q || 
+      t.title.toLowerCase().includes(q) || 
+      t.badge.toLowerCase().includes(q) ||
+      t.en.overview.toLowerCase().includes(q) ||
+      t.spots.some(s => s.toLowerCase().includes(q));
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between selection:bg-blue-600 selection:text-white font-sans relative">
@@ -1481,8 +1510,8 @@ export default function App() {
                   </div>
 
                   <form onSubmit={handleBookingSubmit} className="space-y-3 pt-3">
-                    {/* PICKUP POINT WITH LIVE GPS */}
-                    <div>
+                    {/* PICKUP POINT WITH LIVE GPS & INSTANT SEARCH */}
+                    <div ref={pickupRef} className="relative">
                       <div className="flex items-center justify-between mb-1">
                         <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Pickup Point (Doorstep) *</label>
                         <button 
@@ -1493,30 +1522,59 @@ export default function App() {
                           <Crosshair className="w-3 h-3" /> {isLocating ? "Locating..." : "Use Live GPS"}
                         </button>
                       </div>
-                      <select 
-                        value={pickup} 
-                        onChange={e => {
-                          setPickup(e.target.value);
-                          // Auto reset drop if it equals newly selected pickup
-                          if (drop === e.target.value) setDrop('');
-                        }}
-                        className="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-200 outline-none bg-slate-50/50 focus:ring-2 focus:ring-blue-600"
-                        required
+
+                      <div 
+                        onClick={() => { setIsPickupOpen(!isPickupOpen); setIsDropOpen(false); }}
+                        className="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-200 bg-slate-50/50 hover:border-blue-400 cursor-pointer flex items-center justify-between"
                       >
-                        <option value="">-- Select Pickup Point / Area --</option>
-                        <optgroup label="📍 Delhi NCR Pickup Hubs">
-                          {allLocations.filter(l => l.type === 'pickup').map((opt, i) => (
-                            <option key={`p-delhi-${i}`} value={opt.label}>{opt.label}</option>
-                          ))}
-                        </optgroup>
-                        <optgroup label="🚩 Dharmik Tirth / Outstation Hubs">
-                          {allLocations.filter(l => l.type !== 'pickup').map((opt, i) => (
-                            <option key={`p-out-${i}`} value={opt.label}>
-                              {opt.cat === 'dharmik' ? '🚩 ' : opt.cat === 'budget' ? '⚡ ' : '🏔️ '} {opt.label} ({opt.km} km)
-                            </option>
-                          ))}
-                        </optgroup>
-                      </select>
+                        <span className={pickup ? "text-slate-900 truncate pr-2" : "text-slate-400"}>
+                          {pickup || "-- Select or Search Pickup Area --"}
+                        </span>
+                        <ChevronDown className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                      </div>
+
+                      {isPickupOpen && (
+                        <div className="absolute z-50 mt-1 w-full bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+                          <div className="p-2 bg-slate-50 border-b border-slate-200 flex items-center gap-2 sticky top-0">
+                            <Search className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                            <input
+                              type="text"
+                              autoFocus
+                              value={pickupSearch}
+                              onChange={(e) => setPickupSearch(e.target.value)}
+                              placeholder="Type area, airport, station or city..."
+                              className="w-full text-xs font-semibold bg-transparent outline-none text-slate-900"
+                            />
+                            {pickupSearch && (
+                              <button type="button" onClick={() => setPickupSearch('')} className="text-slate-400 hover:text-slate-700">
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                          </div>
+                          <div className="max-h-56 overflow-y-auto divide-y divide-slate-100">
+                            {allLocations
+                              .filter(loc => loc.label.toLowerCase().includes(pickupSearch.toLowerCase()))
+                              .map((opt, i) => (
+                                <div
+                                  key={`p-opt-${i}`}
+                                  onClick={() => {
+                                    setPickup(opt.label);
+                                    if (drop === opt.label) setDrop('');
+                                    setIsPickupOpen(false);
+                                    setPickupSearch('');
+                                  }}
+                                  className="px-3 py-2.5 text-xs hover:bg-blue-50 cursor-pointer flex items-center justify-between gap-2 transition"
+                                >
+                                  <span className="font-semibold text-slate-800">
+                                    {opt.type === 'pickup' ? '📍 ' : opt.cat === 'dharmik' ? '🚩 ' : opt.cat === 'budget' ? '⚡ ' : '🏔️ '}
+                                    {opt.label}
+                                  </span>
+                                  {opt.km > 0 && <span className="text-[10px] font-bold text-slate-400 whitespace-nowrap">{opt.km} km</span>}
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* SWAP BUTTON */}
@@ -1531,68 +1589,77 @@ export default function App() {
                       </button>
                     </div>
 
-                    {/* DESTINATION LANDMARK WITH DYNAMIC CATEGORIZATION */}
-                    <div>
+                    {/* DESTINATION LANDMARK WITH INSTANT SEARCH BAR */}
+                    <div ref={dropRef} className="relative">
                       <div className="flex items-center justify-between mb-1">
                         <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Destination Landmark *</label>
                         <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
                           {isPickupInDelhi ? "Delhi NCR ➔ Outstation" : "Outstation ➔ Delhi NCR"}
                         </span>
                       </div>
-                      <select 
-                        value={drop} 
-                        onChange={e => setDrop(e.target.value)}
-                        className="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-200 outline-none bg-slate-50/50 focus:ring-2 focus:ring-blue-600"
-                        required
+
+                      <div 
+                        onClick={() => { setIsDropOpen(!isDropOpen); setIsPickupOpen(false); }}
+                        className="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-200 bg-slate-50/50 hover:border-blue-400 cursor-pointer flex items-center justify-between"
                       >
-                        <option value="">-- Select Destination Landmark --</option>
+                        <span className={drop ? "text-slate-900 truncate pr-2" : "text-slate-400"}>
+                          {drop || "-- Click & Search Destination (e.g. Khatu, Ujjain, Manali) --"}
+                        </span>
+                        <ChevronDown className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                      </div>
 
-                        {/* If Pickup is Delhi NCR -> Show categorized Outstation destinations */}
-                        {isPickupInDelhi ? (
-                          <>
-                            {filteredDropLocations.some(l => l.cat === 'dharmik') && (
-                              <optgroup label="🚩 Dharmik Tirth Yatra">
-                                {filteredDropLocations.filter(l => l.cat === 'dharmik').map((opt, i) => (
-                                  <option key={`d-dharmik-${i}`} value={opt.label}>
-                                    🚩 {opt.label} ({opt.km} km)
-                                  </option>
-                                ))}
-                              </optgroup>
+                      {isDropOpen && (
+                        <div className="absolute z-50 mt-1 w-full bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+                          <div className="p-2.5 bg-blue-50/70 border-b border-blue-100 flex items-center gap-2 sticky top-0">
+                            <Search className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                            <input
+                              type="text"
+                              autoFocus
+                              value={dropSearch}
+                              onChange={(e) => setDropSearch(e.target.value)}
+                              placeholder="Type first word (e.g. K, Manali, Ujjain, Kerala)..."
+                              className="w-full text-xs font-bold bg-transparent outline-none text-slate-900 placeholder:font-medium"
+                            />
+                            {dropSearch && (
+                              <button type="button" onClick={() => setDropSearch('')} className="text-slate-400 hover:text-slate-700">
+                                <X className="w-3.5 h-3.5" />
+                              </button>
                             )}
-
-                            {filteredDropLocations.some(l => l.cat === 'holiday') && (
-                              <optgroup label="🏔️ Mountain & Heritage Holidays">
-                                {filteredDropLocations.filter(l => l.cat === 'holiday').map((opt, i) => (
-                                  <option key={`d-holiday-${i}`} value={opt.label}>
-                                    🏔️ {opt.label} ({opt.km} km)
-                                  </option>
-                                ))}
-                              </optgroup>
+                          </div>
+                          <div className="max-h-60 overflow-y-auto divide-y divide-slate-100">
+                            {filteredDropLocations
+                              .filter(loc => loc.label.toLowerCase().includes(dropSearch.toLowerCase()))
+                              .map((opt, i) => (
+                                <div
+                                  key={`d-opt-${i}`}
+                                  onClick={() => {
+                                    setDrop(opt.label);
+                                    setIsDropOpen(false);
+                                    setDropSearch('');
+                                  }}
+                                  className="px-3 py-2.5 text-xs hover:bg-blue-50 cursor-pointer flex items-center justify-between gap-2 transition"
+                                >
+                                  <span className="font-semibold text-slate-800">
+                                    {opt.type === 'pickup' ? '📍 ' : opt.cat === 'dharmik' ? '🚩 ' : opt.cat === 'budget' ? '⚡ ' : '🏔️ '}
+                                    {opt.label}
+                                  </span>
+                                  {opt.km > 0 && (
+                                    <span className="text-[10px] font-black bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md whitespace-nowrap">
+                                      {opt.km} km
+                                    </span>
+                                  )}
+                                </div>
+                              ))}
+                            {filteredDropLocations.filter(loc => loc.label.toLowerCase().includes(dropSearch.toLowerCase())).length === 0 && (
+                              <div className="p-4 text-center text-xs text-slate-500">
+                                No matching destination found. Call +91 88821 91825 for custom route quote!
+                              </div>
                             )}
-
-                            {filteredDropLocations.some(l => l.cat === 'budget') && (
-                              <optgroup label="⚡ Budget-Friendly Escapes">
-                                {filteredDropLocations.filter(l => l.cat === 'budget').map((opt, i) => (
-                                  <option key={`d-budget-${i}`} value={opt.label}>
-                                    ⚡ {opt.label} ({opt.km} km)
-                                  </option>
-                                ))}
-                              </optgroup>
-                            )}
-                          </>
-                        ) : (
-                          /* If Pickup is Outstation -> Show Delhi NCR doorstep drop points */
-                          <optgroup label="📍 Delhi NCR Doorstep Drop Locations">
-                            {filteredDropLocations.map((opt, i) => (
-                              <option key={`d-ncr-${i}`} value={opt.label}>
-                                📍 {opt.label}
-                              </option>
-                            ))}
-                          </optgroup>
-                        )}
-                      </select>
+                          </div>
+                        </div>
+                      )}
                     </div>
-
+                    
                     <div className="grid grid-cols-2 gap-2">
                       <div>
                         <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Travel Date</label>
@@ -1850,6 +1917,30 @@ export default function App() {
               <p className="text-sm text-slate-500 mt-1">
                 Family friendly, senior citizen friendly, and budget optimized cab itineraries with verified polite chauffeurs.
               </p>
+              
+              {/* LIVE TOUR & DESTINATION SEARCH BAR */}
+              <div className="max-w-lg mx-auto mt-6 relative">
+                <div className="flex items-center bg-white border-2 border-slate-200 focus-within:border-blue-600 rounded-2xl px-4 py-3 shadow-sm transition">
+                  <Search className="w-5 h-5 text-blue-600 mr-2.5 flex-shrink-0" />
+                  <input
+                    type="text"
+                    value={tourSearchQuery}
+                    onChange={(e) => setTourSearchQuery(e.target.value)}
+                    placeholder="Search tour, temple, hill station (e.g. Khatu, Ujjain, Ladakh, Kerala)..."
+                    className="w-full text-xs md:text-sm font-semibold text-slate-900 outline-none bg-transparent"
+                  />
+                  {tourSearchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setTourSearchQuery('')}
+                      className="text-slate-400 hover:text-slate-700 p-1"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+              </div>
+              
 
               {/* CATEGORY FILTER PILLS */}
               <div className="flex flex-wrap justify-center gap-2 mt-6">
