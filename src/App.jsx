@@ -1429,18 +1429,19 @@ export default function App() {
         {currentPage === 'home' && (
           <div>
             <section className="relative bg-gradient-to-br from-slate-950 via-[#071e3d] to-slate-900 text-white py-14 px-4 overflow-hidden">
-              {/* SUBTLE FULL CIRCLE BRAND LOGO WATERMARK */}
-              <div className="pointer-events-none select-none absolute inset-0 flex items-center justify-center lg:justify-start lg:pl-24 overflow-hidden z-0">
+             {/* SUBTLE FULL CIRCLE BRAND LOGO WATERMARK */}
+              <div className="pointer-events-none select-none absolute inset-0 flex items-center justify-center overflow-hidden z-0">
                 <img
                   src="/favicon.png"
                   alt=""
-                  className="w-[340px] h-[340px] md:w-[500px] md:h-[500px] object-contain rounded-full opacity-[0.07] mix-blend-luminosity"
+                  className="w-[420px] h-[420px] md:w-[640px] md:h-[640px] object-contain rounded-full opacity-[0.06] mix-blend-luminosity"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = "/logo/brandlogo.jpeg";
                   }}
                 />
               </div>
+              
               
               <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
                 
