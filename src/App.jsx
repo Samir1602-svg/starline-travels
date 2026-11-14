@@ -91,6 +91,13 @@ export default function App() {
     { label: 'Jaipur (Sindhi Camp / Amer Fort Parking)', km: 270, cat: 'holiday' },
     { label: 'Udaipur (City Palace / Lake Pichola Stand)', km: 660, cat: 'holiday' },
     { label: 'Pushkar & Ajmer Sharif Dargah', km: 410, cat: 'holiday' }
+    { label: 'Ujjain Mahakaleshwar & Omkareshwar Jyotirlinga (MP)', km: 820, cat: 'dharmik' },
+    { label: 'Varanasi Kashi Vishwanath & Prayagraj Sangam (UP)', km: 830, cat: 'dharmik' },
+    { label: 'Leh Ladakh Expedition (Via Manali - Atal Tunnel - Jispa)', km: 1020, cat: 'holiday' },
+    { label: 'Spiti Valley Circuit (Shimla - Kalpa - Kaza - Chandratal)', km: 1250, cat: 'holiday' },
+    { label: 'Kashmir Valley (Srinagar, Gulmarg, Pahalgam & Sonamarg)', km: 850, cat: 'holiday' },
+    { label: 'Jodhpur & Jaisalmer Golden Desert Safari (Rajasthan)', km: 790, cat: 'holiday' },
+    { label: 'Mukteshwar & Almora Kumaon Hills (Uttarakhand)', km: 360, cat: 'budget' },
   ];
 
   // Helper check: Is location inside Delhi NCR?
@@ -682,6 +689,84 @@ export default function App() {
           { time: 'Shaam', heading: 'Neemrana Baori & Safe Wapsi', desc: 'Aitihasik baori visit aur raat 8:30 PM tak Delhi safe doorstep drop.' }
         ],
         suggestion: 'Star Line Sujhav: Same day tour me bina kisi hotel booking ke pocket friendly trip complete hoti hai.'
+      }
+    },
+    {
+      id: 'ujjain-mahakal',
+      category: 'dharmik',
+      badge: 'Jyotirlinga Special',
+      title: 'Delhi to Ujjain Mahakaleshwar, Mahakal Lok & Omkareshwar Yatra',
+      duration: '3 Nights / 4 Days',
+      km: 1640,
+      bestCar: 'Maruti Ertiga / Innova Crysta',
+      season: 'Best Season: October to March (Pleasant weather for temple queues and Shipra Ghat walks) & Shravan Month.',
+      mainImg: '/tours/ujjain.png',
+      spots: [
+        'Shri Mahakaleshwar Jyotirlinga & Bhasma Aarti',
+        'Shri Mahakal Lok Corridor (Evening Illuminated Walk)',
+        'Kaal Bhairav Temple & Harsiddhi Shaktipeeth',
+        'Ram Ghat Shipra River Evening Aarti',
+        'Omkareshwar Jyotirlinga Island Shrine (Narmada River)'
+      ],
+      howToEnjoy: 'Cruising via the Delhi-Mumbai Expressway makes the Ujjain road trip smooth and comfortable for families. Attend the world-famous early morning Bhasma Aarti at Mahakaleshwar Temple (book online pass in advance). In the evening, walk through the grand Mahakal Lok corridor featuring 108 towering Shiva pillars illuminated in golden light. Next day, take a scenic 3-hour drive to Omkareshwar Jyotirlinga shaped like the sacred Om symbol on the Narmada river.',
+      en: {
+        overview: 'Complete Madhya Pradesh Jyotirlinga pilgrimage covering Mahakaleshwar (Ujjain) and Omkareshwar via high-speed expressways with doorstep Delhi NCR comfort.',
+        timeline: [
+          { time: 'Day 1', heading: 'Delhi NCR to Ujjain via Delhi-Mumbai Expressway', desc: 'Early morning departure from Delhi. Smooth expressway cruise via Kota/Ratlam. Evening arrival in Ujjain and illuminated walk at Mahakal Lok.' },
+          { time: 'Day 2', heading: 'Mahakaleshwar Darshan, Kaal Bhairav & Shipra Aarti', desc: 'Morning Jyotirlinga Darshan, visit Harsiddhi Mata Mandir, Kaal Bhairav temple, and attend sunset Ram Ghat Aarti.' },
+          { time: 'Day 3', heading: 'Excursion to Omkareshwar Jyotirlinga (Narmada)', desc: 'Morning drive to Omkareshwar (140 km). Holy Narmada Snan, Mamleshwar & Omkareshwar Darshan, evening return to Ujjain.' },
+          { time: 'Day 4', heading: 'Morning Puja & Safe Highway Return to Delhi', desc: 'Post breakfast departure for Delhi NCR with comfortable doorstep drop by night.' }
+        ],
+        suggestion: 'Darshan Tip: Register on the official Mahakaleshwar website 15 days prior for Bhasma Aarti or Sheeghra Darshan tickets to save standing time for elders.'
+      },
+      hi: {
+        overview: 'Baba Mahakal (Ujjain) aur Omkareshwar Jyotirlinga ke pavitra darshan. Delhi-Mumbai Expressway se parivar ke liye aaramdayak aur surakshit tirth yatra.',
+        timeline: [
+          { time: 'Day 1', heading: 'Delhi se Ujjain (Expressway Fast Drive)', desc: 'Subah Delhi doorstep pickup. Naye expressway se shaam tak Ujjain arrival aur raat me Mahakal Lok corridor darshan.' },
+          { time: 'Day 2', heading: 'Mahakaleshwar Darshan, Kaal Bhairav & Ram Ghat Aarti', desc: 'Subah Jyotirlinga darshan, Harsiddhi Shaktipeeth, Kaal Bhairav mandir aur shaam ko Shipra nadi par Aarti.' },
+          { time: 'Day 3', heading: 'Omkareshwar Jyotirlinga & Narmada Darshan', desc: 'Subah Omkareshwar prasthan. Narmada snan, Omkareshwar aur Mamleshwar darshan ke baad shaam ko Ujjain wapsi.' },
+          { time: 'Day 4', heading: 'Subah Puja & Delhi Safe Wapsi', desc: 'Nashte ke baad Delhi ke liye prasthan aur raat tak doorstep drop.' }
+        ],
+        suggestion: 'Star Line Sujhav: Bhasma Aarti ya VIP Sheeghra Darshan ke liye online pass pehle se book kar lein, driver aapko temple gate ke nazdeek drop karega.'
+      }
+    },
+    {
+      id: 'leh-ladakh',
+      category: 'holiday',
+      badge: 'Ultimate Himalayan Expedition',
+      title: 'Delhi to Leh Ladakh, Nubra Valley & Pangong Lake Road Trip',
+      duration: '8 Nights / 9 Days',
+      km: 2350,
+      bestCar: 'Toyota Innova Crysta (High-Altitude Spec)',
+      season: 'Best Season: May to September (Manali-Leh Highway & high mountain passes open with clear blue skies).',
+      mainImg: '/tours/ladakh.png',
+      spots: [
+        'Atal Tunnel, Jispa & Baralacha La Pass (16,040 ft)',
+        'Khardung La Top (One of World\'s Highest Motorable Passes)',
+        'Nubra Valley Sand Dunes & Double-Humped Bactrian Camels',
+        'Pangong Tso Color-Changing High-Altitude Lake',
+        'Magnetic Hill, Hall of Fame & Shanti Stupa Leh'
+      ],
+      howToEnjoy: 'The bucket-list road expedition of India. Ascend gradually via Manali and Jispa so your body acclimatizes naturally to high altitude. Cross dramatic passes like Baralacha La and Tanglang La before reaching Leh. Drive over Khardung La into Nubra Valley to ride double-humped camels on cold desert dunes at Hunder, and camp beside the crystal blue waters of Pangong Lake.',
+      en: {
+        overview: 'Bucket-list trans-Himalayan road journey from Delhi via Manali, Atal Tunnel, Jispa, Nubra Valley, and Pangong Tso in high-torque Innova Crysta.',
+        timeline: [
+          { time: 'Day 1-2', heading: 'Delhi to Manali & Acclimatization Halt at Jispa', desc: 'Drive via Kiratpur expressway to Manali, cross Atal Tunnel into Lahaul valley for overnight rest at Jispa (10,500 ft).' },
+          { time: 'Day 3-4', heading: 'Baralacha La, Sarchu to Leh & Local Sightseeing', desc: 'Cross high Himalayan passes into Leh. Acclimatize and visit Shanti Stupa, Leh Palace, Magnetic Hill, and Sangam.' },
+          { time: 'Day 5-6', heading: 'Khardung La, Nubra Valley & Pangong Tso Lake', desc: 'Ascend Khardung La to Nubra sand dunes. Next day drive via Shyok river route to iconic Pangong Lake.' },
+          { time: 'Day 7-9', heading: 'Chang La Pass, Return via Manali to Delhi NCR', desc: 'Return to Leh via Chang La, descend through Sarchu & Manali back to your Delhi doorstep.' }
+        ],
+        suggestion: 'Altitude Advisory: Carry Camphor (Kapur), stay hydrated, and rest on Day 3 in Leh. Note: As per Ladakh union rules, local Leh registered vehicles are used for Nubra/Pangong inner-line sectors.'
+      },
+      hi: {
+        overview: 'Manali, Atal Tunnel, Khardung La, Nubra Valley aur Pangong Lake ka sapno bhara road trip. High-altitude experienced drivers ke sath safe expedition.',
+        timeline: [
+          { time: 'Day 1-2', heading: 'Delhi se Manali & Jispa Night Stay', desc: 'Delhi se Manali hote hue Atal Tunnel paar karke Jispa me stay taaki body pahadi hawa me set ho jaye.' },
+          { time: 'Day 3-4', heading: 'Leh Arrival & Shanti Stupa, Magnetic Hill', desc: 'Baralacha La aur Tanglang La passes cross karke Leh entry. Shanti Stupa, Hall of Fame aur Sangam point visit.' },
+          { time: 'Day 5-6', heading: 'Khardung La, Nubra Valley & Pangong Lake', desc: 'Khardung La top hote hue Nubra sand dunes aur agle din Pangong Tso neeli jheel ka nazara.' },
+          { time: 'Day 7-9', heading: 'Manali Hote Hue Delhi Safe Wapsi', desc: 'Chang La pass se Leh wapsi aur Sarchu-Manali highway se Delhi doorstep drop.' }
+        ],
+        suggestion: 'Star Line Sujhav: Ladakh union ke niyam ke mutabiq Nubra aur Pangong ke liye Leh local permit taxi lagti hai, jiska poora arrangement hamari team karwati hai.'
       }
     }
   ]);
