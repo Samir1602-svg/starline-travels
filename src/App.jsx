@@ -90,7 +90,7 @@ export default function App() {
     { label: 'Dharamshala & McLeodganj (Dalai Lama Temple)', km: 490, cat: 'holiday' },
     { label: 'Jaipur (Sindhi Camp / Amer Fort Parking)', km: 270, cat: 'holiday' },
     { label: 'Udaipur (City Palace / Lake Pichola Stand)', km: 660, cat: 'holiday' },
-    { label: 'Pushkar & Ajmer Sharif Dargah', km: 410, cat: 'holiday' }
+    { label: 'Pushkar & Ajmer Sharif Dargah', km: 410, cat: 'holiday' },
     { label: 'Ujjain Mahakaleshwar & Omkareshwar Jyotirlinga (MP)', km: 820, cat: 'dharmik' },
     { label: 'Varanasi Kashi Vishwanath & Prayagraj Sangam (UP)', km: 830, cat: 'dharmik' },
     { label: 'Leh Ladakh Expedition (Via Manali - Atal Tunnel - Jispa)', km: 1020, cat: 'holiday' },
