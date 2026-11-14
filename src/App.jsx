@@ -98,6 +98,10 @@ export default function App() {
     { label: 'Kashmir Valley (Srinagar, Gulmarg, Pahalgam & Sonamarg)', km: 850, cat: 'holiday' },
     { label: 'Jodhpur & Jaisalmer Golden Desert Safari (Rajasthan)', km: 790, cat: 'holiday' },
     { label: 'Mukteshwar & Almora Kumaon Hills (Uttarakhand)', km: 360, cat: 'budget' },
+    { label: 'Kerala Backwaters & Hills (Munnar, Thekkady & Alleppey)', km: 2700, cat: 'holiday' },
+    { label: 'Tirupati Balaji Temple & Padmavathi Ammavari Darshan (AP)', km: 2150, cat: 'dharmik' },
+    { label: 'Rameshwaram Jyotirlinga, Madurai Meenakshi & Kanyakumari', km: 2800, cat: 'dharmik' },
+    { label: 'Mysore Palace, Coorg Coffee Estates & Ooty Hill Station', km: 2450, cat: 'holiday' },
   ];
 
   // Helper check: Is location inside Delhi NCR?
@@ -767,6 +771,353 @@ export default function App() {
           { time: 'Day 7-9', heading: 'Manali Hote Hue Delhi Safe Wapsi', desc: 'Chang La pass se Leh wapsi aur Sarchu-Manali highway se Delhi doorstep drop.' }
         ],
         suggestion: 'Star Line Sujhav: Ladakh union ke niyam ke mutabiq Nubra aur Pangong ke liye Leh local permit taxi lagti hai, jiska poora arrangement hamari team karwati hai.'
+      }
+    },
+    {
+      id: 'varanasi-prayagraj',
+      category: 'dharmik',
+      badge: 'Kashi & Triveni Sangam',
+      title: 'Delhi to Varanasi Kashi Vishwanath, Sarnath & Prayagraj Sangam Yatra',
+      duration: '3 Nights / 4 Days',
+      km: 1660,
+      bestCar: 'Maruti Ertiga / Innova Crysta',
+      season: 'Best Season: October to March (Pleasant weather for Ganga Ghats and temple darshan). Dev Deepawali in November is spectacular.',
+      mainImg: '/tours/varanasi.png',
+      spots: [
+        'Shri Kashi Vishwanath Dham Corridor & Jyotirlinga',
+        'Dashashwamedh Ghat Evening Maha Ganga Aarti',
+        'Assi Ghat Morning Subah-e-Banaras & Boat Ride',
+        'Sarnath Buddhist Stupa & Museum',
+        'Prayagraj Triveni Sangam Holy Dip & Bade Hanuman Mandir'
+      ],
+      howToEnjoy: 'Cruising via the Yamuna, Agra-Lucknow, and Purvanchal Expressways makes the Kashi road trip super smooth. Witness the hypnotic evening Ganga Aarti at Dashashwamedh Ghat from a wooden boat, walk through the grand Kashi Vishwanath Corridor, taste Banarasi chaat and malaiyo, and take a holy purifying dip at the confluence of Ganga, Yamuna, and Saraswati at Prayagraj Sangam.',
+      en: {
+        overview: 'Spiritual pilgrimage to the eternal city of Kashi and Triveni Sangam via high-speed expressways with doorstep Delhi NCR comfort and senior-friendly drop points.',
+        timeline: [
+          { time: 'Day 1', heading: 'Delhi NCR to Varanasi via Purvanchal Expressway', desc: 'Early morning departure from Delhi. Smooth expressway cruise via Lucknow. Evening arrival in Varanasi and hotel check-in.' },
+          { time: 'Day 2', heading: 'Kashi Vishwanath Corridor, Sankat Mochan & Ganga Aarti', desc: 'Morning Jyotirlinga Darshan, Kaal Bhairav, Sankat Mochan Hanuman Mandir, and evening boat ride for Dashashwamedh Ghat Aarti.' },
+          { time: 'Day 3', heading: 'Sarnath Excursion & Drive to Prayagraj Sangam', desc: 'Morning visit to Sarnath, followed by a 2.5-hour drive to Prayagraj for Triveni Sangam holy dip and Anand Bhawan.' },
+          { time: 'Day 4', heading: 'Morning Sangam Puja & Safe Highway Return to Delhi', desc: 'Post breakfast departure via Agra-Lucknow Expressway with comfortable doorstep drop in Delhi NCR by night.' }
+        ],
+        suggestion: 'Ghat Advisory: Old Varanasi lanes are pedestrian-only. Our drivers drop families at Godowlia/Maidagin e-rickshaw stand to minimize walking.'
+      },
+      hi: {
+        overview: 'Baba Kashi Vishwanath aur Prayagraj Triveni Sangam ki pavitra tirth yatra. High-speed expressways se parivar aur buzurgo ke liye aaramdayak safar.',
+        timeline: [
+          { time: 'Day 1', heading: 'Delhi se Varanasi (Purvanchal Expressway Drive)', desc: 'Subah Delhi doorstep pickup. Expressway se shaam tak Kashi arrival aur aaram.' },
+          { time: 'Day 2', heading: 'Kashi Vishwanath Dham, Sankat Mochan & Ganga Aarti', desc: 'Subah Baba Vishwanath darshan, Kaal Bhairav, Sankat Mochan mandir aur shaam ko Dashashwamedh Ghat par boat se Ganga Aarti.' },
+          { time: 'Day 3', heading: 'Sarnath Darshan & Prayagraj Triveni Sangam', desc: 'Sarnath visit ke baad Prayagraj prasthan. Triveni Sangam snan aur Bade Hanuman ji darshan.' },
+          { time: 'Day 4', heading: 'Subah Puja & Delhi Safe Wapsi', desc: 'Nashte ke baad expressway se Delhi ke liye prasthan aur raat tak doorstep drop.' }
+        ],
+        suggestion: 'Star Line Sujhav: Mandir ke paas battery rickshaw point tak cab drop karegi taaki buzurgo ko zyada chalna na pade.'
+      }
+    },
+    {
+      id: 'spiti-valley',
+      category: 'holiday',
+      badge: 'Middle Land Adventure',
+      title: 'Delhi to Spiti Valley Circuit (Shimla, Kalpa, Kaza & Chandratal)',
+      duration: '7 Nights / 8 Days',
+      km: 2500,
+      bestCar: 'Toyota Innova Crysta / Ertiga SUV',
+      season: 'Best Season: May to October (Both Shimla-Kaza and Kunzum Pass-Manali routes remain open with clear skies).',
+      mainImg: '/tours/spiti.png',
+      spots: [
+        'Kalpa Kinnaur Kailash Snow View & Suicide Point',
+        'Nako High-Altitude Lake & Tabo 1000-Year-Old Monastery',
+        'Key Monastery (Ki Gompa) & Chicham Highest Suspension Bridge',
+        'Hikkim (World\'s Highest Post Office) & Komic Village',
+        'Chandratal Moon Lake & Kunzum La Pass (14,931 ft)'
+      ],
+      howToEnjoy: 'Enter Spiti gradually via Shimla and Kinnaur so your body acclimatizes effortlessly without altitude sickness. Send a postcard from Hikkim—the world\'s highest post office—marvel at the cliffside Key Monastery, cross the dizzying Chicham Bridge, and camp near the crescent-shaped Chandratal Lake before exiting via Atal Tunnel and Manali.',
+      en: {
+        overview: 'Complete Kinnaur-Spiti-Manali trans-Himalayan circuit with expert mountain chauffeurs experienced in high-altitude terrain and water crossings.',
+        timeline: [
+          { time: 'Day 1-2', heading: 'Delhi to Narkanda & Kalpa (Kinnaur Valley)', desc: 'Ascend via Shimla and Rampur along the Sutlej river to Kalpa for sunrise views of the Kinner Kailash peak.' },
+          { time: 'Day 3-4', heading: 'Nako Lake, Tabo Monastery & Arrival in Kaza', desc: 'Cross Khab Sangam into Spiti Valley. Visit ancient Tabo caves and reach Kaza (12,500 ft).' },
+          { time: 'Day 5-6', heading: 'Key Monastery, Chicham Bridge, Hikkim & Chandratal Lake', desc: 'Explore world\'s highest villages (Komic, Langza, Hikkim) and drive over Kunzum Pass to Chandratal Lake.' },
+          { time: 'Day 7-8', heading: 'Atal Tunnel, Manali & Return Cruise to Delhi NCR', desc: 'Descend via Batal and Atal Tunnel to Manali, followed by smooth expressway return to your Delhi doorstep.' }
+        ],
+        suggestion: 'Route Advisory: Entering via Shimla and exiting via Manali is the safest acclimatization circuit for families and first-time high-altitude travelers.'
+      },
+      hi: {
+        overview: 'Shimla, Kinnaur, Kaza aur Chandratal Lake ka complete Spiti Valley circuit. Experienced pahadi drivers ke sath safe road adventure.',
+        timeline: [
+          { time: 'Day 1-2', heading: 'Delhi se Narkanda & Kalpa (Kinnaur)', desc: 'Shimla hote hue Sutlej nadi ke kinare Kalpa arrival aur Kinner Kailash parvat ka sunrise view.' },
+          { time: 'Day 3-4', heading: 'Nako Lake, Tabo Monastery & Kaza Entry', desc: 'Khab Sangam paar karke Spiti entry. Tabo monastery aur Kaza main town stay.' },
+          { time: 'Day 5-6', heading: 'Key Monastery, Hikkim Post Office & Chandratal Lake', desc: 'Duniya ke sabse unche post office Hikkim se postcard bhejein aur Kunzum Pass hote hue Chandratal Lake visit karein.' },
+          { time: 'Day 7-8', heading: 'Atal Tunnel, Manali & Delhi Wapsi', desc: 'Atal Tunnel se Manali hote hue expressway se Delhi safe doorstep drop.' }
+        ],
+        suggestion: 'Star Line Sujhav: Spiti circuit me Shimla side se chadhai aur Manali side se utrai karne se altitude sickness nahi hoti.'
+      }
+    },
+    {
+      id: 'kashmir-valley',
+      category: 'holiday',
+      badge: 'Paradise on Earth',
+      title: 'Delhi to Kashmir Valley (Srinagar, Gulmarg, Pahalgam & Sonamarg)',
+      duration: '6 Nights / 7 Days',
+      km: 1700,
+      bestCar: 'Toyota Innova Crysta / Maruti Ertiga',
+      season: 'Best Season: March to October (Tulip gardens, lush green meadows & Shikara rides); Dec to Feb for winter snow skiing at Gulmarg.',
+      mainImg: '/tours/kashmir.png',
+      spots: [
+        'Dal Lake Shikara Ride & Traditional Wooden Houseboat Stay',
+        'Gulmarg Gondola Cable Car & Apharwat Snow Peak',
+        'Pahalgam Betaab Valley, Aru Valley & Lidder River',
+        'Sonamarg Thajiwas Glacier & Meadow of Gold',
+        'Mughal Gardens (Nishat Bagh, Shalimar Bagh) & Shankaracharya Temple'
+      ],
+      howToEnjoy: 'Cruise through the modern Banihal-Qazigund tunnel directly into the Kashmir Valley. Enjoy a sunset Shikara ride on Dal Lake, take the world\'s second-highest Gondola ride in Gulmarg, relax beside the crystal waters of the Lidder River in Pahalgam, and savor authentic Kashmiri Kahwa and Rogan Josh.',
+      en: {
+        overview: 'Scenic road journey from Delhi NCR across Punjab and Jammu into Srinagar, Gulmarg, Pahalgam, and Sonamarg with verified highway chauffeurs.',
+        timeline: [
+          { time: 'Day 1-2', heading: 'Delhi to Jammu/Patnitop & Arrival in Srinagar', desc: 'Smooth highway drive via Ludhiana and Pathankot, crossing Banihal tunnel into Srinagar for evening Shikara ride.' },
+          { time: 'Day 3-4', heading: 'Gulmarg Snow Gondola & Sonamarg Glacier Excursion', desc: 'Full-day trips to Gulmarg meadows/cable car and Sonamarg golden valley.' },
+          { time: 'Day 5', heading: 'Pahalgam Valley of Shepherds & Lidder River', desc: 'Scenic drive past saffron fields of Pampore to Pahalgam for Betaab and Aru Valley exploration.' },
+          { time: 'Day 6-7', heading: 'Mughal Gardens & Safe Return Drive to Delhi NCR', desc: 'Morning visit to Nishat & Shalimar Bagh, followed by comfortable return journey to Delhi doorstep.' }
+        ],
+        suggestion: 'Union Rule Note: Inside Pahalgam (Aru/Betaab) and Sonamarg glacier points, local J&K union cabs operate per government rules; our driver coordinates transfers smoothly.'
+      },
+      hi: {
+        overview: 'Srinagar Dal Lake, Gulmarg Gondola, Pahalgam aur Sonamarg ka shandar parivarik Kashmir road trip.',
+        timeline: [
+          { time: 'Day 1-2', heading: 'Delhi se Patnitop & Srinagar Dal Lake Arrival', desc: 'Punjab highway aur Banihal tunnel cross karke Srinagar entry. Shaam ko Dal Lake me Shikara ride.' },
+          { time: 'Day 3-4', heading: 'Gulmarg Gondola & Sonamarg Excursion', desc: 'Gulmarg cable car ride aur Sonamarg ke sundar pahadi maidan aur glacier visit.' },
+          { time: 'Day 5', heading: 'Pahalgam Betaab Valley & Lidder River', desc: 'Pampore kesar ke kheton ke paas se Pahalgam drive aur Betaab Valley sightseeing.' },
+          { time: 'Day 6-7', heading: 'Mughal Gardens & Delhi Safe Wapsi', desc: 'Nishat Bagh aur Shalimar Bagh visit ke baad safe highway drive back to Delhi.' }
+        ],
+        suggestion: 'Star Line Sujhav: Kashmir ke internal sightseeing points par local union taxi chalti hai, jisme hamare driver poori help karte hain.'
+      }
+    },
+    {
+      id: 'jodhpur-jaisalmer',
+      category: 'holiday',
+      badge: 'Royal Thar Desert',
+      title: 'Delhi to Jodhpur Blue City & Jaisalmer Sam Sand Dunes Safari',
+      duration: '4 Nights / 5 Days',
+      km: 1580,
+      bestCar: 'Maruti Ertiga / Innova Crysta',
+      season: 'Best Season: October to March (Cool desert nights, camel safaris & folk music under starry skies). Avoid summer heat (April-July).',
+      mainImg: '/tours/jaisalmer.png',
+      spots: [
+        'Sam Sand Dunes Sunset Camel Safari & Jeep Dune Bashing',
+        'Jaisalmer Sonar Quila (Living Golden Fort) & Patwon Ki Haveli',
+        'Longewala War Memorial & Tanot Mata Border Temple',
+        'Mehrangarh Fort & Jaswant Thada Marble Cenotaph (Jodhpur)',
+        'Umaid Bhawan Palace Museum & Clock Tower Spice Market'
+      ],
+      howToEnjoy: 'Experience the royal grandeur of Marwar. Explore the towering Mehrangarh Fort in Jodhpur, then drive deep into the Thar Desert to Jaisalmer. Walk inside the living Golden Fort, enjoy a thrilling 4x4 Jeep dune bashing and camel ride at Sam Sand Dunes followed by Kalbeliya folk dance around a desert campfire.',
+      en: {
+        overview: 'Grand Rajasthan desert circuit covering Jodhpur\'s Mehrangarh Fort, Jaisalmer\'s Golden Fort, Sam Sand Dunes camp, and Tanot Mata border.',
+        timeline: [
+          { time: 'Day 1', heading: 'Delhi NCR to Jodhpur (The Blue City)', desc: 'Early morning departure via NH48. Evening arrival in Jodhpur, hotel check-in, and local street food walk.' },
+          { time: 'Day 2', heading: 'Mehrangarh Fort, Umaid Bhawan & Drive to Jaisalmer', desc: 'Morning tour of majestic Mehrangarh Fort and Jaswant Thada, followed by afternoon drive to Jaisalmer.' },
+          { time: 'Day 3', heading: 'Golden Fort, Gadisar Lake & Sam Sand Dunes Camp', desc: 'Explore Sonar Quila and Patwon Ki Haveli. Evening desert camp check-in for sunset camel safari and folk cultural night.' },
+          { time: 'Day 4-5', heading: 'Tanot Mata / Longewala & Safe Return to Delhi', desc: 'Morning visit to historic Longewala war memorial, followed by comfortable return cruise via Bikaner/Jaipur highway to Delhi.' }
+        ],
+        suggestion: 'Desert Tip: Carry warm jackets for desert camps even in November/February, as Thar desert temperatures drop sharply after sunset.'
+      },
+      hi: {
+        overview: 'Jodhpur Mehrangarh Fort, Jaisalmer Golden Fort aur Sam Sand Dunes me camel safari aur desert camping ka royal experience.',
+        timeline: [
+          { time: 'Day 1', heading: 'Delhi se Jodhpur (Blue City Arrival)', desc: 'Subah Delhi pickup. Shaam tak Jodhpur hotel check-in aur local market visit.' },
+          { time: 'Day 2', heading: 'Mehrangarh Fort & Jaisalmer Prasthan', desc: 'Subah Mehrangarh Fort aur Jaswant Thada darshan ke baad dopahar me Jaisalmer drive.' },
+          { time: 'Day 3', heading: 'Sonar Quila, Patwon Ki Haveli & Sam Sand Dunes', desc: 'Golden Fort sightseeing aur shaam ko Sam Sand Dunes camp me camel ride aur Rajasthani folk dance.' },
+          { time: 'Day 4-5', heading: 'Longewala War Memorial & Delhi Wapsi', desc: 'Longewala border visit ke baad Bikaner-Jaipur route se Delhi safe doorstep drop.' }
+        ],
+        suggestion: 'Star Line Sujhav: Desert camp me raat ko thand hoti hai, isliye light woolen kapde zaroor sath rakhein.'
+      }
+    },
+    {
+      id: 'mukteshwar-almora',
+      category: 'budget',
+      badge: 'Peaceful Kumaon Escape',
+      title: 'Delhi to Mukteshwar, Kainchi Dham & Almora Hill Retreat',
+      duration: '2 Nights / 3 Days',
+      km: 720,
+      bestCar: 'Sedan (Dzire / Aura) / Ertiga SUV',
+      season: 'Best Season: March to June (Apple & peach orchards in bloom) & September to December (Crystal clear Nanda Devi snow peaks).',
+      mainImg: '/tours/mukteshwar.png',
+      spots: [
+        'Neem Karoli Baba Ashram (Kainchi Dham Temple)',
+        'Mukteshwar Dham Ancient Shiva Temple & Chauli Ki Jali Cliffs',
+        '180-Degree Himalayan Snow Peak Overlook (Nanda Devi & Trishul)',
+        'Kasar Devi Temple (Almora Magnetic Energy Ridge)',
+        'Bhowali Fruit Market & Ghorakhal Bell Temple'
+      ],
+      howToEnjoy: 'A peaceful, crowd-free alternative to Nainital. Seek divine blessings at Neem Karoli Baba\'s Kainchi Dham Ashram on the way up, breathe crisp pine air at 7,500 ft in Mukteshwar, watch dramatic sunset views from Chauli Ki Jali cliffs, and bring back fresh organic Himalayan fruit jams and Almora Baal Mithai.',
+      en: {
+        overview: 'Serene, budget-friendly Kumaon mountain getaway combining Kainchi Dham blessings with Mukteshwar orchards and panoramic Himalayan views.',
+        timeline: [
+          { time: 'Day 1', heading: 'Delhi NCR to Kainchi Dham & Mukteshwar Arrival', desc: 'Early morning drive via Moradabad and Kathgodam. Darshan at Kainchi Dham Ashram and evening arrival in Mukteshwar.' },
+          { time: 'Day 2', heading: 'Mukteshwar Temple, Chauli Ki Jali & Almora Kasar Devi', desc: 'Morning cliff walk at Chauli Ki Jali, excursion to Kasar Devi temple in Almora, and local Baal Mithai shopping.' },
+          { time: 'Day 3', heading: 'Orchard Walk & Smooth Return to Delhi NCR', desc: 'Relaxed breakfast overlooking snow peaks, Bhowali fruit market stop, and evening doorstep drop in Delhi.' }
+        ],
+        suggestion: 'Saver Tip: Ideal 3-day weekend escape with minimal traffic and budget-friendly fuel consumption for Sedans and Ertiga SUVs.'
+      },
+      hi: {
+        overview: 'Neem Karoli Baba Kainchi Dham ke darshan aur Mukteshwar-Almora ke shant pahadon me pocket-friendly family weekend trip.',
+        timeline: [
+          { time: 'Day 1', heading: 'Delhi se Kainchi Dham & Mukteshwar', desc: 'Subah pickup. Kathgodam hote hue Kainchi Dham Ashram darshan aur shaam tak Mukteshwar hotel arrival.' },
+          { time: 'Day 2', heading: 'Chauli Ki Jali, Mukteshwar Dham & Almora Kasar Devi', desc: 'Subah Himalaya snow view, Mukteshwar mandir, Chauli Ki Jali aur Almora Kasar Devi visit.' },
+          { time: 'Day 3', heading: 'Bhowali Market & Delhi Safe Wapsi', desc: 'Subah orchard walk, Bhowali se fresh fruits aur raat tak Delhi doorstep drop.' }
+        ],
+        suggestion: 'Star Line Sujhav: Nainital ki bheed se bachne ke liye Mukteshwar parivar ke sath weekend bitane ki sabse shant jagah hai.'
+      }
+    },
+    {
+      id: 'kerala-backwaters',
+      category: 'holiday',
+      badge: 'God\'s Own Country',
+      title: 'Kerala Complete Tour (Munnar Tea Gardens, Thekkady & Alleppey Houseboat)',
+      duration: '5 Nights / 6 Days',
+      km: 2700,
+      bestCar: 'Toyota Innova Crysta / Maruti Ertiga',
+      season: 'Best Season: September to March (Lush green tea estates, pleasant backwater cruises & cool hill weather).',
+      mainImg: '/tours/kerala.png',
+      spots: [
+        'Munnar Tea Plantations, Eravikulam National Park & Mattupetty Dam',
+        'Alleppey Backwaters Private Traditional Kettuvallam Houseboat',
+        'Thekkady Periyar Wildlife Sanctuary & Spice Plantations',
+        'Kochi Fort Kochi Chinese Fishing Nets & Marine Drive',
+        'Athirappilly Waterfalls (Niagara of India)'
+      ],
+      howToEnjoy: 'Experience the tranquil beauty of South India. Walk through endless emerald tea gardens in Munnar, watch traditional Kalaripayattu martial arts and Kathakali dance in Thekkady, cruise through palm-fringed canals on a private Alleppey houseboat with fresh Kerala cuisine, and explore historic colonial streets at Fort Kochi.',
+      en: {
+        overview: 'Complete Kerala holiday circuit covering Kochi, Munnar misty hills, Thekkady spice forests, and Alleppey backwater houseboats with dedicated chauffeur service.',
+        timeline: [
+          { time: 'Day 1-2', heading: 'Kochi Arrival, Athirappilly Falls & Drive to Munnar', desc: 'Pickup from Kochi Airport/Station or long-haul transit. En-route visit Athirappilly waterfalls and ascend into Munnar tea hills.' },
+          { time: 'Day 3', heading: 'Munnar Tea Museum, Mattupetty Dam & Echo Point', desc: 'Full-day sightseeing across Eravikulam National Park, Kundala Lake, and aromatic tea estates.' },
+          { time: 'Day 4', heading: 'Thekkady Periyar Lake & Spice Garden Tour', desc: 'Scenic drive to Thekkady for Periyar wildlife boat safari, spice plantation walk, and cultural Kathakali show.' },
+          { time: 'Day 5-6', heading: 'Alleppey Backwater Houseboat & Kochi Departure', desc: 'Overnight luxury houseboat cruise through Vembanad backwaters, followed by Fort Kochi sightseeing and drop.' }
+        ],
+        suggestion: 'Travel Tip: For families flying from Delhi to Kochi, Star Line Travels also arranges verified local Kerala chauffeur cabs at Cochin Airport/Station.'
+      },
+      hi: {
+        overview: 'Munnar ke chai ke bagaan, Thekkady jungle safari aur Alleppey backwater houseboat ka shandar parivarik Kerala tour package.',
+        timeline: [
+          { time: 'Day 1-2', heading: 'Kochi Arrival, Athirappilly Falls & Munnar', desc: 'Kochi se pickup ke baad Athirappilly waterfalls dekhte hue Munnar ke thande pahadon me arrival.' },
+          { time: 'Day 3', heading: 'Munnar Tea Gardens & Mattupetty Dam', desc: 'Tea museum, Echo Point, Kundala Lake aur Eravikulam National Park sightseeing.' },
+          { time: 'Day 4', heading: 'Thekkady Periyar Safari & Spice Gardens', desc: 'Periyar lake boating, masalon ke bagaan aur shaam ko traditional Kathakali dance show.' },
+          { time: 'Day 5-6', heading: 'Alleppey Houseboat Stay & Kochi Drop', desc: 'Alleppey backwaters me private houseboat stay aur Fort Kochi sightseeing ke baad drop.' }
+        ],
+        suggestion: 'Star Line Sujhav: Agar aap Delhi se flight lekar Kochi utarte hain, toh hamari partner fleet aapko Cochin Airport par receive karegi.'
+      }
+    },
+    {
+      id: 'tirupati-balaji',
+      category: 'dharmik',
+      badge: 'Shri Venkateswara Dham',
+      title: 'Tirupati Balaji Temple, Padmavathi & Srikalahasti Divya Darshan',
+      duration: '2 Nights / 3 Days',
+      km: 2150,
+      bestCar: 'Toyota Innova Crysta / Ertiga SUV',
+      season: 'Best Season: September to March (Comfortable weather for Tirumala hill queues and temple walks).',
+      mainImg: '/tours/tirupati.png',
+      spots: [
+        'Tirumala Shri Venkateswara Swamy Temple (Tirupati Balaji)',
+        'Shri Padmavathi Ammavari Temple (Tiruchanur)',
+        'Srikalahasti Rahu-Ketu Vayu Lingam Temple',
+        'Kapila Theertham Sacred Waterfall Shrine',
+        'ISKCON Tirupati & Govindaraja Swamy Temple'
+      ],
+      howToEnjoy: 'Seek divine blessings of Lord Venkateswara atop the sacred seven hills of Tirumala. Traditional attire (Dhoti/Kurta for men, Saree/Salwar for women) is mandatory for Darshan. Collect world-famous Tirupati Laddu Prasadam, visit Goddess Padmavathi at Tiruchanur, and perform sacred Puja at Srikalahasti temple.',
+      en: {
+        overview: 'Sacred South Indian pilgrimage to Tirumala Tirupati Balaji, Tiruchanur Padmavathi Temple, and Srikalahasti with punctual chauffeur assistance.',
+        timeline: [
+          { time: 'Day 1', heading: 'Arrival, Tiruchanur Padmavathi & Kapila Theertham', desc: 'Pickup from Tirupati/Chennai hub. Evening darshan at Shri Padmavathi Ammavari Temple and Kapila Theertham.' },
+          { time: 'Day 2', heading: 'Tirumala Hills Ascent & Shri Balaji Darshan', desc: 'Early morning drive up the scenic Tirumala ghat road for Lord Venkateswara Darshan and Laddu Prasadam.' },
+          { time: 'Day 3', heading: 'Srikalahasti Temple Darshan & Return Drop', desc: 'Morning excursion to Srikalahasti Shiva temple (38 km), followed by comfortable drop at station/airport.' }
+        ],
+        suggestion: 'Darshan Advisory: Book TTD Special Entry Darshan (₹300) tickets online 60–90 days in advance; traditional Indian attire is strictly enforced.'
+      },
+      hi: {
+        overview: 'Tirumala Tirupati Balaji, Maa Padmavathi aur Srikalahasti mandir ke divya darshan. Parivar aur buzurgo ke liye aaramdayak cab suvidha.',
+        timeline: [
+          { time: 'Day 1', heading: 'Tirupati Arrival & Maa Padmavathi Darshan', desc: 'Tirupati/Chennai se pickup ke baad Tiruchanur me Padmavathi Ammavari mandir aur Kapila Theertham darshan.' },
+          { time: 'Day 2', heading: 'Tirumala Pahad & Shri Balaji Darshan', desc: 'Subah Tirumala ghat road se mandir darshan aur pavitra Tirupati Laddu prasad prapti.' },
+          { time: 'Day 3', heading: 'Srikalahasti Mandir & Wapsi Drop', desc: 'Subah Srikalahasti Shiva mandir darshan aur shaam ko airport/railway station drop.' }
+        ],
+        suggestion: 'Star Line Sujhav: Balaji darshan ke liye online TTD pass pehle se book karein aur traditional Indian kapde hi pehnein.'
+      }
+    },
+    {
+      id: 'rameshwaram-kanyakumari',
+      category: 'dharmik',
+      badge: 'Jyotirlinga & Ocean Sangam',
+      title: 'Rameshwaram Jyotirlinga, Madurai Meenakshi & Kanyakumari Yatra',
+      duration: '4 Nights / 5 Days',
+      km: 2800,
+      bestCar: 'Toyota Innova Crysta / Tempo Traveller',
+      season: 'Best Season: October to March (Pleasant coastal breezes and clear sunrise/sunset views at Kanyakumari).',
+      mainImg: '/tours/rameshwaram.png',
+      spots: [
+        'Ramanathaswamy Jyotirlinga Temple & 22 Holy Wells (Theerthams)',
+        'Pamban Sea Bridge & Dhanushkodi Ghost Town Ocean Point',
+        'Madurai Meenakshi Amman Historic Temple',
+        'Kanyakumari Vivekananda Rock Memorial & Thiruvalluvar Statue',
+        'Triveni Sangam (Confluence of Bay of Bengal, Arabian Sea & Indian Ocean)'
+      ],
+      howToEnjoy: 'Complete the sacred Southern Jyotirlinga circuit. Take a holy bath in Agni Theertham sea and the 22 sacred wells inside Rameshwaram Temple, drive across the iconic Pamban sea bridge to Dhanushkodi where two oceans meet, marvel at the colorful gopurams of Madurai Meenakshi Temple, and watch the sunrise over the ocean at Kanyakumari.',
+      en: {
+        overview: 'Grand Tamil Nadu spiritual tour covering Madurai Meenakshi Temple, Rameshwaram Jyotirlinga, Dhanushkodi tip, and Kanyakumari ocean confluence.',
+        timeline: [
+          { time: 'Day 1', heading: 'Madurai Arrival & Meenakshi Amman Temple Darshan', desc: 'Pickup at Madurai hub. Visit Thirumalai Nayakkar Palace and evening Aarti at Meenakshi Amman Temple.' },
+          { time: 'Day 2', heading: 'Pamban Bridge Drive to Rameshwaram & Dhanushkodi', desc: 'Cross iconic Pamban sea bridge. Afternoon excursion to Dhanushkodi beach tip and APJ Abdul Kalam Memorial.' },
+          { time: 'Day 3', heading: 'Ramanathaswamy 22 Wells Snan & Drive to Kanyakumari', desc: 'Early morning holy bath at Agni Theertham & Jyotirlinga Darshan, followed by coastal drive to Kanyakumari.' },
+          { time: 'Day 4-5', heading: 'Vivekananda Rock Memorial, Sunset & Return Drop', desc: 'Ferry ride to Vivekananda Rock, Kanyakumari Amman temple darshan, and comfortable return transfer.' }
+        ],
+        suggestion: 'Pilgrim Tip: Carry an extra set of dry clothes at Rameshwaram Temple for the sacred 22-well water bath before main Jyotirlinga Darshan.'
+      },
+      hi: {
+        overview: 'Madurai Meenakshi Mandir, Rameshwaram Jyotirlinga, Dhanushkodi aur Kanyakumari Sangam ki sampoorn dakshin tirth yatra.',
+        timeline: [
+          { time: 'Day 1', heading: 'Madurai Arrival & Meenakshi Amman Darshan', desc: 'Madurai pickup ke baad vishal Meenakshi Amman mandir ke divya darshan.' },
+          { time: 'Day 2', heading: 'Pamban Sea Bridge se Rameshwaram & Dhanushkodi', desc: 'Samudra ke upar bane Pamban bridge se Rameshwaram entry aur Dhanushkodi beach point visit.' },
+          { time: 'Day 3', heading: '22 Kund Snan, Jyotirlinga Darshan & Kanyakumari', desc: 'Subah Agni Theertham snan aur Baba Rameshwaram darshan ke baad Kanyakumari prasthan.' },
+          { time: 'Day 4-5', heading: 'Vivekananda Rock Memorial & Wapsi Drop', desc: 'Samudra sangam sunrise, Vivekananda Rock ferry ride aur return drop.' }
+        ],
+        suggestion: 'Star Line Sujhav: Rameshwaram mandir me 22 pavitra kundon ke snan ke liye sukhe kapde sath le kar jayein.'
+      }
+    },
+    {
+      id: 'mysore-coorg-ooty',
+      category: 'holiday',
+      badge: 'Nilgiri & Coffee Hills',
+      title: 'Mysore Royal Palace, Coorg Coffee Estates & Ooty Hill Station',
+      duration: '4 Nights / 5 Days',
+      km: 2450,
+      bestCar: 'Maruti Ertiga / Innova Crysta',
+      season: 'Best Season: October to May (Cool misty Nilgiri hills, blooming botanical gardens & pleasant coffee plantation walks).',
+      mainImg: '/tours/ooty.png',
+      spots: [
+        'Mysore Ambavilas Palace (Sunday Evening Illumination) & Chamundi Hills',
+        'Coorg Abbey Falls, Raja\'s Seat & Dubare Elephant Camp',
+        'Ooty Botanical Gardens, Ooty Lake & Doddabetta Peak',
+        'Nilgiri Mountain Toy Train Ride (Ooty to Coonoor)',
+        'Bandipur & Mudumalai Tiger Reserve Forest Drive'
+      ],
+      howToEnjoy: 'Drive through lush tiger reserves and winding Nilgiri hairpins. Admire the royal splendor of Mysore Palace, wake up to fresh aroma inside Coorg coffee plantations, feed elephants at Dubare camp, and ride the heritage Nilgiri Toy Train through misty eucalyptus hills in Ooty.',
+      en: {
+        overview: 'Classic South Indian hill and heritage circuit combining Mysore\'s royal palaces, Coorg\'s coffee hills, and Ooty\'s Nilgiri tea estates.',
+        timeline: [
+          { time: 'Day 1', heading: 'Bangalore/Mysore Pickup, Mysore Palace & Brindavan Gardens', desc: 'Visit Chamundi Hill temple, majestic Mysore Palace, and illuminated evening fountain show at Brindavan Gardens.' },
+          { time: 'Day 2', heading: 'Drive to Coorg (Scotland of India) & Dubare Camp', desc: 'Scenic drive to Madikeri. Visit Golden Temple (Namdroling Monastery), Dubare Elephant Camp, and Raja\'s Seat sunset.' },
+          { time: 'Day 3', heading: 'Abbey Falls & Drive through Bandipur Forest to Ooty', desc: 'Morning visit to Abbey Falls, followed by wildlife forest drive via Bandipur/Mudumalai ascending to Ooty.' },
+          { time: 'Day 4-5', heading: 'Ooty Doddabetta Peak, Coonoor Toy Train & Return', desc: 'Explore Botanical Gardens, Ooty Lake boating, Coonoor tea gardens, and safe return transfer.' }
+        ],
+        suggestion: 'Hill Driving Note: The Kalhatti ghat route to Ooty has 36 steep hairpin bends; our experienced hill drivers use the safer Gudalur route for family comfort.'
+      },
+      hi: {
+        overview: 'Mysore Palace, Coorg ke coffee bagaan aur Ooty Nilgiri pahadon ka shandar family holiday tour package.',
+        timeline: [
+          { time: 'Day 1', heading: 'Mysore Palace, Chamundi Hills & Brindavan Gardens', desc: 'Mysore Palace tour, Chamundi devi darshan aur shaam ko Brindavan Garden musical fountain.' },
+          { time: 'Day 2', heading: 'Coorg Arrival, Golden Temple & Raja\'s Seat', desc: 'Madikeri arrival, Tibetan Golden Temple, Dubare Elephant Camp aur sunset view.' },
+          { time: 'Day 3', heading: 'Abbey Falls & Bandipur Jungle Route se Ooty', desc: 'Abbey waterfalls ke baad Bandipur tiger reserve ke raste Ooty hill station arrival.' },
+          { time: 'Day 4-5', heading: 'Ooty Lake, Doddabetta Peak & Wapsi Drop', desc: 'Botanical garden, Nilgiri toy train ride aur Coonoor sightseeing ke baad return drop.' }
+        ],
+        suggestion: 'Star Line Sujhav: Parivar ki safety ke liye hamare drivers Ooty chadhne ke liye smooth Gudalur highway route use karte hain.'
       }
     }
   ]);
