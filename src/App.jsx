@@ -33,11 +33,11 @@ export default function App() {
 
   // Dynamic Rates State
   const [rates, setRates] = useState({
-    sedan: 12,
-    suv: 15,
-    crysta: 19,
-    tempo: 26,
-    driverAllowance: 500,
+    sedan: 14,
+    suv: 24,
+    crysta: 29,
+    tempo: 39,
+    driverAllowance: 499,
     oneWaySurchargeRatio: 1.65
   });
 
@@ -148,11 +148,11 @@ export default function App() {
       .then(data => {
         if (data && !data.error && Object.keys(data).length > 0) {
           setRates({
-            sedan: data.sedan ?? 12,
-            suv: data.suv ?? 15,
-            crysta: data.crysta ?? 19,
-            tempo: data.tempo ?? 26,
-            driverAllowance: data.driver_allowance ?? 500,
+            sedan: data.sedan ?? 14,
+            suv: data.suv ?? 24,
+            crysta: data.crysta ?? 29,
+            tempo: data.tempo ?? 39,
+            driverAllowance: data.driver_allowance ?? 499,
             oneWaySurchargeRatio: data.oneway_ratio ?? 1.65
           });
         }
