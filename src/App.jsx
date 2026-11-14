@@ -1430,7 +1430,7 @@ export default function App() {
           <div>
             <section className="relative bg-gradient-to-br from-slate-950 via-[#071e3d] to-slate-900 text-white py-14 px-4 overflow-hidden">
              {/* SUBTLE FULL CIRCLE BRAND LOGO WATERMARK */}
-              <div className="pointer-events-none select-none absolute inset-0 flex items-center justify-center lg:justify-start lg:pl-16 overflow-hidden z-0">
+              <div className="pointer-events-none select-none absolute inset-0 flex items-center justify-center overflow-hidden z-0">
                 <img
                   src="/favicon.png"
                   alt=""
